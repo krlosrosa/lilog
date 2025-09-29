@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
+import {jwtDecode} from "jwt-decode";
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
@@ -48,6 +50,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
+  },
+
+  events:{
+    async signOut(message) {
+      //console.log('signOut', message);
+      if ('token' in message && message.token?.accessToken) {
+        const decoded = jwtDecode(message.token?.accessToken);
+        console.log('decoded', decoded);
+        const sub = decoded.sub;
+        const url = `${process.env.AUTH_KEYCLOAK_ADMIN}/users/${sub}/logout`;
+        const response = await fetch(`${url}`,{
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${message.token?.accessToken}`,
+          },
+        });
+        console.log('response', response);
+      }
+    }
   },
 
   pages: {
