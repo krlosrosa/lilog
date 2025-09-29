@@ -216,6 +216,7 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
             ) : mapas.length > 0 ? (
               mapas.map((mapa, index) => {
                 const tipo = config?.tipoImpressao as 'CLIENTE' | 'TRANSPORTE'
+                const transporteId = `${mapa.transportId}${tipo === 'CLIENTE' ? `[${mapa.codClientes[0]}]` : ''}`
                 const exibirCliente = config?.exibirInfoCabecalho as 'PRIMEIRO' | 'TODOS' | 'NENHUM'
                 return <div
                   key={mapa.paleteId}
@@ -223,7 +224,7 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
                     }`}
                 >
                   <HeaderPicking mapa={mapa} tipo={tipo} exibirCliente={exibirCliente} />
-                  {mapa.tipo === 'picking' && <BodyPicking transporteId={`${mapa.transportId}${tipo === 'CLIENTE' && `[${mapa.codClientes[0]}]`}`} config={config} itens={mapa.itens} />}
+                  {mapa.tipo === 'picking' && <BodyPicking transporteId={transporteId} config={config} itens={mapa.itens} />}
                   {mapa.tipo === 'palete' && <BodyPalete config={config} itens={mapa.itens} />}
                   {mapa.tipo === 'unidade' && <BodyUnidade config={config} itens={mapa.itens} />}
                   {mapa.tipo === 'fifo' && <BodyFifo config={config} itens={mapa.itens} />}
