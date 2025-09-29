@@ -9,11 +9,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
+import { useState } from "react";
 
 type AddFuncionarioBody = z.infer<typeof criarNovoFuncionarioBody>;
 
 export function AddFuncionario({ children }: { children: React.ReactNode }) {
   const { centerId } = useAuthStore()
+  const [open, setOpen] = useState(false)
 
   const methods = useForm<AddFuncionarioBody>({
     resolver: zodResolver(criarNovoFuncionarioBody),
@@ -25,7 +27,10 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
 
   const { mutate: addFuncionario } = useCriarNovoFuncionario(callBackReactQuery({
     successMessage: 'Funcionário adicionado com sucesso!',
-    errorMessage: 'Erro ao adicionar funcionário',
+    errorMessage: 'Erro ao adicionar funcionário',    
+    onSuccessCallback: () => {
+      setOpen(false)
+    }
   }))
 
 
@@ -36,7 +41,7 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
   }
   return (
     <div className="">
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="" asChild>
           {children}
         </DialogTrigger>

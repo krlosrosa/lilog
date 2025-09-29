@@ -5,6 +5,7 @@ import { useDeletarUsuario } from "@/_services/api/hooks/usuario/usuario"
 import { AlertTriangle, Trash2 } from "lucide-react"
 import { useAuthStore } from "@/_shared/stores/auth.store"
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery"
+import { useState } from "react"
 
 type Props = {
   children: React.ReactNode
@@ -13,11 +14,15 @@ type Props = {
 
 export function DeletarFuncionario({ children, funcionarioId }: Props) {
   const { centerId } = useAuthStore()
+  const [open, setOpen] = useState(false)
 
   const { mutate: deletarFuncionario } = useDeletarUsuario(
     callBackReactQuery({
-      successMessage: 'Pausa Geral adicionada com sucesso',
-      errorMessage: 'Erro ao adicionar Pausa Geral',
+      successMessage: 'Funcionário deletado com sucesso',
+      errorMessage: 'Erro ao deletar funcionário',
+      onSuccessCallback: () => {
+        setOpen(false)
+      }
     })
   )
 
@@ -30,7 +35,7 @@ export function DeletarFuncionario({ children, funcionarioId }: Props) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
