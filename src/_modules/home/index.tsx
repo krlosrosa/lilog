@@ -21,6 +21,7 @@ export default function Home() {
             description="Visualize e planeje rotas de forma prática e intuitiva. Gere mapas personalizados com todas as informações necessárias para sua operação logística interna."
             icon={<MapPin className="h-8 w-8 text-primary" />}
             badge="Ativo"
+            href="/expedicao"
           />
           
           <CardsSessao
@@ -28,6 +29,7 @@ export default function Home() {
             description="Monitore a produtividade de equipes de forma eficiente. Acompanhe métricas em tempo real e identifique oportunidades de melhoria na operação."
             icon={<BarChart3 className="h-8 w-8 text-primary" />}
             badge="Ativo"
+            href="/produtividade"
           />
         </div>
       </div>
