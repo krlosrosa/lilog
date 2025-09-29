@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { Filtros } from "../_views/produtividadePage";
+import { CalendarIcon } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -43,7 +44,7 @@ export default function DefinirProcesso({ filtros, setFiltros, open, setOpen }: 
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Definir Processo</Button>
+        <Button className={`${selectedProcess ? 'bg-primary/10' : 'bg-red-300'}`} size='icon' variant="outline" onClick={() => setOpen(true)}><CalendarIcon /></Button>
         </DialogTrigger>
         <DialogContent className="min-w-2xl">
           <DialogHeader>

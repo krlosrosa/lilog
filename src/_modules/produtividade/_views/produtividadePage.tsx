@@ -17,6 +17,10 @@ import { FinalizarPausaGeral } from "../_components/acoes/finalizarPausaGeral";
 import { AddPausaIndividual } from "../_components/acoes/addPausaIndividual";
 import { AddPausaGeral } from "../_components/acoes/addPausaGeral";
 import { Can } from "@/_shared/utils/casl";
+import { Button } from "@/_shared/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/_shared/components/ui/dropdown-menu";
+import { MoreVertical } from "lucide-react";
+import { DeletarDemanda } from "../_components/acoes/deletarDemanda";
 
 export type Filtros = {
   data: string;
@@ -69,8 +73,8 @@ export default function ProdutividadePage() {
     }
   );
 
-   useEffect(() => {
-    if(centerId === ''){
+  useEffect(() => {
+    if (centerId === '') {
       router.push('/selecionar-centro');
       return;
     }
@@ -85,29 +89,67 @@ export default function ProdutividadePage() {
     router.replace(`/produtividade?${params.toString()}`);
   }, [filtros]);
 
- useEffect(() => {
-  if(centerId === ''){
-    router.push('/selecionar-centro');
-    return;
-  }
+  useEffect(() => {
+    if (centerId === '') {
+      router.push('/selecionar-centro');
+      return;
+    }
     setOpen(false);
   }, []);
 
   return (
     <div>
       <div className="flex justify-between items-center">
-        <Can I="read" a="PRODUTIVIDADE">    
+        <Can I="read" a="PRODUTIVIDADE">
           <HeaderProdutividade />
           <StartProdutividade />
-          <FinalizarPausaIndividual />
-          <AddPausaGeral processo={processo} />
-          <FinalizarPausaGeral processo={processo} />
-          <AddPausaIndividual />
-          <FinalizarProdutividade />
+          <div className="flex gap-2">
+
+            <FinalizarProdutividade />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 flex flex-col gap-1">
+                <DropdownMenuItem
+                  className="gap-2 cursor-pointer w-full"
+                  asChild
+                >
+                  <AddPausaIndividual />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="gap-2 cursor-pointer w-full"
+                  asChild
+                >
+                  <AddPausaGeral processo={processo} />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="gap-2 cursor-pointer w-full"
+                  asChild
+                >
+                  <FinalizarPausaIndividual />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="gap-2 cursor-pointer w-full"
+                  asChild
+                >
+                  <FinalizarPausaGeral processo={processo} />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="gap-2 cursor-pointer w-full"
+                  asChild
+                >
+                  <DeletarDemanda />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DefinirProcesso filtros={filtros} setFiltros={setFiltros} open={open} setOpen={setOpen} />
+          </div>
         </Can>
       </div>
-      <DefinirProcesso filtros={filtros} setFiltros={setFiltros} open={open} setOpen={setOpen} />
-        <Filtros filtros={filtros} setFiltros={setFiltros} />
+      <Filtros filtros={filtros} setFiltros={setFiltros} />
       {isLoading ? <LoadingState /> : error ? <ErrorState /> : <div>
         <OverView overview={dataOverview?.overViewProdutividade} />
         <ListaProdutividade produtividade={dataOverview?.produtividade} />

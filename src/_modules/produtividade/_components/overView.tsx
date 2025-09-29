@@ -14,7 +14,7 @@ export function OverView({ overview }: OverViewProps) {
     return (
       <div className="w-full my-2">
         <div className="flex items-center justify-center p-8 bg-muted/30 border border-border rounded-xl">
-          <div className="text-muted-foreground">Dados de overview não disponíveis</div>
+          <div className="text-muted-foreground">Dados de overview não disponíveis favor selecionar processo e data</div>
         </div>
       </div>
     );

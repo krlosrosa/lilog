@@ -19,7 +19,7 @@ export const SidebarLayout = ({ children }: SidebarLayoutProps) => {
       <Sidebar />
       <main 
         className={cn(
-          "flex-1 w-full transition-all duration-300 overflow-x-hidden",
+          "p-4 flex-1 w-full transition-all duration-300 overflow-x-hidden",
           !isMobile && isCollapsed && "ml-14",
           !isMobile && !isCollapsed && "ml-60",
           isMobile && "ml-0"

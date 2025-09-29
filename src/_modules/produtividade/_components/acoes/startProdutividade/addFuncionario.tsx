@@ -196,12 +196,12 @@ export function AddFuncionarioDemandas({ funcionarioSelecionado, setFuncionarioS
               </div>
 
               <div className="max-h-64 overflow-y-auto space-y-1 pr-2">
-                {funcionariosFiltrados && funcionariosFiltrados.map((funcionario) => {
+                {funcionariosFiltrados && funcionariosFiltrados.map((funcionario, index) => {
                   const estaSelecionado = funcionarioSelecionado?.id === funcionario.id;
 
                   return (
                     <div
-                      key={funcionario.id}
+                      key={funcionario.id + index}
                       className={`group flex items-center justify-between p-2.5 border rounded-lg cursor-pointer transition-all duration-200 ${estaSelecionado
                           ? 'bg-primary/5 border-primary/30 ring-1 ring-primary/20'
                           : 'bg-card hover:bg-muted/50 border-border hover:shadow-sm'
