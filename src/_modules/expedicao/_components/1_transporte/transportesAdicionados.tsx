@@ -4,7 +4,7 @@ import {
   useAdicionarTransporte,
   useListarTransportesComDemandaIniciada,
   useListarTransportesNaoCadastrados,
-} from "@/services/api/hooks/transporte/transporte"
+} from "@/_services/api/hooks/transporte/transporte"
 import { useEffect, useRef, useState } from "react"
 import { listarTransportes } from "../../services/listarTransportes"
 import { useFileStore } from "../../_stores/useMapaImpressao"

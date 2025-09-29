@@ -1,11 +1,10 @@
 'use client'
 import { Button } from "@/_shared/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/_shared/components/ui/dialog"
-import { createMutationOptions } from "@/_shared/lib/mutationOptions"
-import { useDeletarUsuario } from "@/services/api/hooks/usuario/usuario"
-import { toast } from "react-toastify"
+import { useDeletarUsuario } from "@/_services/api/hooks/usuario/usuario"
 import { AlertTriangle, Trash2 } from "lucide-react"
 import { useAuthStore } from "@/_shared/stores/auth.store"
+import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery"
 
 type Props = {
   children: React.ReactNode
@@ -15,10 +14,12 @@ type Props = {
 export function DeletarFuncionario({ children, funcionarioId }: Props) {
   const { centerId } = useAuthStore()
 
-  const { mutate: deletarFuncionario } = useDeletarUsuario(createMutationOptions({
-    successMessage: 'Produtividade iniciada com sucesso!',
-    errorMessage: 'Erro ao iniciar produtividade',
-  }))
+  const { mutate: deletarFuncionario } = useDeletarUsuario(
+    callBackReactQuery({
+      successMessage: 'Pausa Geral adicionada com sucesso',
+      errorMessage: 'Erro ao adicionar Pausa Geral',
+    })
+  )
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

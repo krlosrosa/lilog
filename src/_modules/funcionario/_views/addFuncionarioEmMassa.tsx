@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import { Upload, FileSpreadsheet, X } from "lucide-react";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
 import { useAuthStore } from "@/_shared/stores/auth.store";
-import { ListarFuncionariosPorCentroZodDtoOutput } from "@/_services/api/model";
 import { convertXlsxToArray } from "@/_modules/produtividade/services/convertXlsxToArray";
 
 export function AddFuncionarioEmMassa() {
@@ -18,10 +17,6 @@ export function AddFuncionarioEmMassa() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  const queryClient = useQueryClient()
-
-  const { queryKey } = useListarFuncionariosPorCentro(centerId || '')
 
   const { mutate: addFuncionarioEmMassa, isPending } = useCriarFuncionariosEmMassa(callBackReactQuery({
     successMessage: 'Produtividade iniciada com sucesso!',

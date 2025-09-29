@@ -1,5 +1,5 @@
-import { DefinirConfiguracaoImpressaoDto } from '@/services/api/model';
-import { ImpressaoMapaItem } from '../../../types/mapaPicking.type';
+import { ImpressaoMapaItem } from '@/_modules/expedicao/services/types/pickingMap';
+import { DefinirConfiguracaoImpressaoDto } from '@/_services/api/model';    
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 

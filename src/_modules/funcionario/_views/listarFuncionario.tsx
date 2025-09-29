@@ -1,5 +1,5 @@
 "use client"
-import { useListarFuncionariosPorCentro } from "@/services/api/hooks/usuario/usuario";
+import { useListarFuncionariosPorCentro } from "@/_services/api/hooks/usuario/usuario";
 import { DeletarFuncionario } from "./deletarFuncionario";
 import { Button } from "@/_shared/components/ui/button";
 import { Trash2 } from "lucide-react";
