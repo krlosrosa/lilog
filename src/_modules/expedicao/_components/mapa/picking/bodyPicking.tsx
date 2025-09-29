@@ -35,12 +35,12 @@ export const BodyPicking = memo(({ itens, config, transporteId }: BodyProps) => 
 
             </tr>
             <tr className='bg-gray-100 print:bg-gray-200'>
+              <RowHeader extraClass="w-[10%]">Endereço</RowHeader>
               <RowHeader extraClass="w-[10%]">SKU</RowHeader>
               <RowHeader extraClass="w-[30%]">Descrição</RowHeader>
               <RowHeader extraClass="w-[10%]">Lote</RowHeader>
               <RowHeader extraClass="w-[10%]">Data de Fabricação</RowHeader>
               {config?.dataMaximaPercentual != null && config.dataMaximaPercentual > 0 && <RowHeader extraClass="w-[10%]">Data Máxima</RowHeader>}
-              <RowHeader extraClass="w-[10%]">Endereço</RowHeader>
               <RowHeader extraClass="w-[5%]">Caixas</RowHeader>
               {!config?.separarUnidades && <RowHeader extraClass="w-[5%]">Unid.</RowHeader>}
               {!config?.separarPaleteFull && <RowHeader extraClass="w-[5%]">Paletes</RowHeader>}
