@@ -24,7 +24,7 @@ type AddFuncionarioDemandasProps = {
 
 export function AddFuncionarioDemandas({ funcionarioSelecionado, setFuncionarioSelecionado, iniciarDemandaProdutividade, observacao, setObservacao, isPending }: AddFuncionarioDemandasProps) {
   const { centerId } = useAuthStore()
-  const { data: funcionariosDisponiveis, isLoading, error } = useListarFuncionariosPorCentro('pavuna')
+  const { data: funcionariosDisponiveis, isLoading, error } = useListarFuncionariosPorCentro(centerId as string)
 
   const [filtroNome, setFiltroNome] = useState<string>('');
 
