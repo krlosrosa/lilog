@@ -27,8 +27,8 @@ export const BodyPicking = memo(({ itens, config, transporteId }: BodyProps) => 
           <thead>
             <tr>
               <th></th>
-              <RowHeader extraClass="w-[30%]">{transporteId}</RowHeader>
               <th></th>
+              <RowHeader extraClass="w-[30%]">{transporteId}</RowHeader>
               <th></th>
               <th></th>
               <th></th>
