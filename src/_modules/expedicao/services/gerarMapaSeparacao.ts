@@ -41,14 +41,11 @@ export async function gerarMapaSeparacao(
     throw new Error('Não foi possível enriquecer os itens');
   }
 
-  console.log({shipments, products, routingPlans});
-
   const enrichedShipments = enriquecerItems(
     shipments,
     routingPlans,
     products,
   );
-  console.log({enrichedShipments});
   const transformQuantities =
     transformarQuantidadeEmUnidade(enrichedShipments);
   const enrichedShipmentsWithFaixa = definirFaixaERange(
@@ -87,7 +84,6 @@ export async function gerarMapaSeparacao(
     quantidade: config.valorQuebra ?? 0,
   });
   const mapas = gerarMapa(enrichedShipmentsWithDistribuicao);
-  console.log({mapas});
 
   return mapas;
 

@@ -9,8 +9,6 @@ export function gerarMinuta(
   items: EnrichedPickingMapItem[],
 ): ImpressaoMinutaCarregamento[] {
   const mapaPorChave = new Map<string, EnrichedPickingMapItem[]>();
-
-  console.log({ items });
   // Agrupa os itens por chave composta
   for (const item of items) {
     if (!item.rota) continue;

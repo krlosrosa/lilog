@@ -113,7 +113,6 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
 
   const generateMap = useCallback(async () => {
     if (!config) {
-      console.log("Aguardando configurações para gerar o mapa...")
       return
     }
     setIsGenerating(true)

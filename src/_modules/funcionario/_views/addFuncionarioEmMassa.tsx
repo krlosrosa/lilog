@@ -54,7 +54,6 @@ export function AddFuncionarioEmMassa() {
       return
     }
     const info = await convertXlsxToArray(selectedFile)
-    console.log(info)
     addFuncionarioEmMassa({
       data: {
         centerId: centerId || '',

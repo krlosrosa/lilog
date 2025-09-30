@@ -36,12 +36,14 @@ export const HeaderPicking = memo(({ mapa, tipo, exibirCliente }: HeaderProps) =
 
   const pesoTotal = (mapa.pesoCaixa || 0) + (mapa.pesoPalete || 0) + (mapa.pesoUnidade || 0)
 
+  const idSegregado = mapa.id.match(/\[(.*?)\]/)
+
   return (
     <div className="mb-3 w-full border border-slate-300 bg-white">
       {/* Cabeçalho Principal */}
       <div className="flex text-xl items-center justify-between bg-gray-800 px-3 py-1.5 text-white print:bg-black">
         <h1 className="font-bold tracking-wide">
-          MAPA DE SEPARAÇÃO - {mapa.transportId}{tipo === 'CLIENTE' && `[${mapa.codClientes[0]}]`} | {mapa.segmento}
+          MAPA DE SEPARAÇÃO - {mapa.transportId}{tipo === 'CLIENTE' && `[${mapa.codClientes[0]}]`}{idSegregado && `[${idSegregado[1]}]`} | {mapa.segmento}
         </h1>
         <h1 className="font-bold tracking-wide">
           {getTypeLabel(mapa.tipo)}

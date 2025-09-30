@@ -355,16 +355,6 @@ export default function DashboardPage() {
           <h2 className="text-3xl font-bold tracking-tight">Dashboard de Produtividade</h2>
           <p className="text-muted-foreground mt-1">Visão executiva das operações em tempo real.</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <Target className="mr-2 h-4 w-4" />
-            Definir Metas
-          </Button>
-          <Button size="sm">
-            <Activity className="mr-2 h-4 w-4" />
-            Exportar Relatório
-          </Button>
-        </div>
       </div>
 
       <Card className="border-2">

@@ -50,9 +50,7 @@ export function AuthSync() {
       if (sessionToken === token) {
         return;
       }
-
-      console.log('🔐 AuthSync - Nova sessão detectada. Sincronizando perfil na store...');
-
+      
       const userToLogin: User = {
         name: session.user.name || '',
         email: session.user.email || '',

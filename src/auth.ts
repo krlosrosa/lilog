@@ -54,10 +54,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   events:{
     async signOut(message) {
-      //console.log('signOut', message);
       if ('token' in message && message.token?.accessToken) {
         const decoded = jwtDecode(message.token?.accessToken);
-        console.log('decoded', decoded);
         const sub = decoded.sub;
         const url = `${process.env.AUTH_KEYCLOAK_ADMIN}/users/${sub}/logout`;
         const response = await fetch(`${url}`,{
@@ -66,7 +64,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             'Authorization': `Bearer ${message.token?.accessToken}`,
           },
         });
-        console.log('response', response);
       }
     }
   },

@@ -44,10 +44,11 @@ export function gerarGrupos(
 
     if (tipo === "TRANSPORTE") {
       groupKey =
-        groupKey === ''
-          ? `${shipment.transportId}`
-          : transporteGroup|| remessaGroup ? `${groupKey}` : `${shipment.transportId}`;
+      groupKey === ''
+      ? `${shipment.transportId}`
+      : `${shipment.transportId}-[${shipment.codCliente}]`;
     }
+    console.log({groupKey});
 
     if (tipo === 'CLIENTE') {
       groupKey =
@@ -55,6 +56,7 @@ export function gerarGrupos(
           ? `${shipment.transportId}-[${shipment.codCliente}]`
           : clienteGroup ? `${shipment.transportId}-${groupKey}` : `${shipment.transportId}-[${shipment.codCliente}]`;
     }
+
     return {
       id: groupKey,
       ...shipment,

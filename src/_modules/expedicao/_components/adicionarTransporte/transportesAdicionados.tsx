@@ -54,7 +54,7 @@ export default function TransportesAdicionados({
       },
     },
   })
-    
+
 
   const { mutateAsync: fetchTransports, isPending: isFetching } =
     useListarTransportesNaoCadastrados({
@@ -66,7 +66,7 @@ export default function TransportesAdicionados({
       },
     })
 
-    
+
 
   async function handleAddTransporte(dataExpedicao: string) {
     const transportesInput = await ajustarInputDados({
@@ -150,9 +150,15 @@ export default function TransportesAdicionados({
         <Card>
           <CardHeader>
             <CardTitle>Transportes em separação</CardTitle>
-            <CardDescription>
-              Estes transportes já possuem demanda iniciada e estão em processo de separação.
-            </CardDescription>
+            <div className="flex flex-row items-center justify-between">
+
+              <CardDescription>
+                Estes transportes já possuem demanda iniciada e estão em processo de separação.
+              </CardDescription>
+              <Button variant="outline" onClick={() => setTab("upload")}>
+                Voltar para Uploads
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             {isLoadingTransportesComDemandaIniciada ? (
@@ -183,9 +189,14 @@ export default function TransportesAdicionados({
       <Card>
         <CardHeader>
           <CardTitle>Transportes pendentes</CardTitle>
-          <CardDescription>
-            Os seguintes transportes foram encontrados na sua planilha e ainda não foram cadastrados.
-          </CardDescription>
+          <div className="flex flex-row items-center justify-between">
+            <CardDescription>
+              Os seguintes transportes foram encontrados na sua planilha e ainda não foram cadastrados.
+            </CardDescription>
+            <Button variant="outline" onClick={() => setTab("upload")}>
+              Voltar para Uploads
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-72 w-full">

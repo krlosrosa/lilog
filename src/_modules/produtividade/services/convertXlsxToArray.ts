@@ -7,8 +7,6 @@ export async function convertXlsxToArray(params: File): Promise<User[]> {
   const sheet = workbook.Sheets[sheetName];
   const data = XLSX.utils.sheet_to_json(sheet);
 
-  console.log(file)
-  console.log(data)
 
   const convertedData = data.map((item: any) => ({
     id: String(item['id'] ?? '').trim(),

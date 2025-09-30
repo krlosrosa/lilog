@@ -41,16 +41,6 @@ export default function TimelineDemanda({ infoDemanda }: TimelineDemandaProps) {
     )
   }
 
-  // Debug para investigar inconsistências
-  if ((infoDemanda.status === 'CONCLUIDO' || infoDemanda.status === 'FINALIZADA') && !infoDemanda.fim) {
-    console.log('🔍 Debug - Dados da demanda:', {
-      id: infoDemanda.id,
-      status: infoDemanda.status,
-      fim: infoDemanda.fim,
-      inicio: infoDemanda.inicio,
-      funcionario: infoDemanda.funcionario
-    })
-  }
 
   // Indicador de status atual em tempo real
   const getCurrentStatus = () => {
