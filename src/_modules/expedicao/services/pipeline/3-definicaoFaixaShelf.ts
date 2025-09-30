@@ -18,6 +18,8 @@ export function definirFaixaERange(
     const today = startOfDay(new Date())
     const mfgDate = startOfDay(new Date(item.dtFabricacao))
     const expiryDate = addDays(mfgDate, shelf)
+    const addDate = shelf * (percentMax / 100)
+    const expiryDateWithAdd = addDays(mfgDate, addDate)
 
     const daysSinceManufacture = differenceInDays(today, mfgDate)
     const remainingDays = shelf - daysSinceManufacture
@@ -35,7 +37,7 @@ export function definirFaixaERange(
     return {
       ...item,
       faixa: faixa as 'verde' | 'laranja' | 'amarelo' | 'vermelho',
-      dataMaxima: expiryDate.toISOString(),
+      dataMaxima: faixa === "verde" ? expiryDateWithAdd.toISOString() : item.dtFabricacao.toISOString(),
     }
   })
 }

@@ -23,6 +23,12 @@ export function StartProdutividade() {
     callBackReactQuery({
       successMessage: "Demanda iniciada com sucesso.",
       errorMessage: "Não foi possível iniciar a demanda. Tente novamente.",
+      onSuccessCallback: () => {
+        clear()
+        setFuncionarioSelecionado(null)
+        setObservacao('')
+        setTab('paletes')
+      }
     })
   )
 
