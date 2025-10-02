@@ -1,11 +1,13 @@
 import { toast } from 'react-toastify';
-import { type UseMutationOptions } from '@tanstack/react-query'; // Importe os tipos corretos
+import { type UseMutationOptions } from '@tanstack/react-query';
 import { AxiosError } from "axios";
+import { queryClient } from '@/_shared/providers/queryProvider';
 
 // Definimos os argumentos que nossa função irá aceitar
 interface CreateMutationOptionsArgs<TData, TError, TVariables> {
   successMessage?: string;
   errorMessage?: string;
+  invalidateQueries?: string | ReadonlyArray<string> | string[];
   onSuccessCallback?: (data: TData, variables: TVariables, context: unknown) => void;
   onErrorCallback?: (error: TError, variables: TVariables, context: unknown) => void;
 }
@@ -23,13 +25,24 @@ export function callBackReactQuery<
 >({
   successMessage,
   errorMessage,
+  invalidateQueries,
   onSuccessCallback,
   onErrorCallback,
 }: CreateMutationOptionsArgs<TData, TError, TVariables>) {
   // Retorna o objeto que você estava repetindo
   const mutationOptions: UseMutationOptions<TData, TError, TVariables> = {
     onSuccess: (data, variables, context) => {
+      
       toast.success(successMessage);
+      
+      // Invalidar queries se fornecidas
+      if (invalidateQueries) {
+        const queryKeys = Array.isArray(invalidateQueries) ? invalidateQueries : [invalidateQueries];
+        queryKeys.forEach((key) => {
+          queryClient.invalidateQueries({ queryKey: [key] });
+        });
+      }
+      
       // Se um callback extra foi passado, execute-o também
       onSuccessCallback?.(data, variables, context);
     },

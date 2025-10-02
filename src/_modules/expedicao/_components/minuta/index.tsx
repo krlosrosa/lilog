@@ -175,7 +175,8 @@ export function ImpressaoMinutaCarregamentoPage({
               minutas.map((minuta, index) => (
                 <div
                   key={minuta.id}
-                  className={`mb-4 rounded-lg border p-2 ${index > 0 ? "page-break-before-always" : ""}`}
+                  className={`mb-4 rounded-lg border p-2 ${index > 0 ? "print-page-break" : ""}`}
+                  style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
                 >
                   <Header mapa={minuta} />
                   <Body itens={minuta.itens} />

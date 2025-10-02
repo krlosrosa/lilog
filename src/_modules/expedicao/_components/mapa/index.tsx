@@ -111,6 +111,13 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
     },
   })
 
+  
+  useEffect(() => {
+    if (isError) {
+      toast.error("Erro ao buscar configurações")
+    }
+  }, [isError])
+
   const generateMap = useCallback(async () => {
     if (!config) {
       return
@@ -219,8 +226,8 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
                 const exibirCliente = config?.exibirInfoCabecalho as 'PRIMEIRO' | 'TODOS' | 'NENHUM'
                 return <div
                   key={mapa.paleteId}
-                  className={`mb-4 p-1 rounded-lg ${index > 0 ? "page-break-before-always" : ""
-                    }`}
+                  className={`mb-4 p-1 rounded-lg ${index > 0 ? "print-page-break" : ""}`}
+                  style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
                 >
                   <HeaderPicking mapa={mapa} tipo={tipo} exibirCliente={exibirCliente} />
                   {mapa.tipo === 'picking' && <BodyPicking transporteId={transporteId} config={config} itens={mapa.itens} />}

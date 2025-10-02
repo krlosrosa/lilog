@@ -28,8 +28,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.name = user.name;
         token.email = user.email;
 
-        // Permissões serão buscadas de forma assíncrona no AuthSync
-        // para não bloquear o login se o backend estiver fora
+        console.log('🔑 JWT Callback - Token armazenado:', {
+          hasAccessToken: !!account.access_token,
+          tokenPreview: account.access_token ? `${account.access_token.substring(0, 30)}...` : 'null'
+        });
       }
       if (user) {
         token.name = user.name;
@@ -44,6 +46,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email as string;
       // Permissões serão carregadas de forma assíncrona no AuthSync
       session.user.permissions = [];
+      
+      console.log('📝 Session Callback:', {
+        hasAccessToken: !!token.accessToken,
+        tokenPreview: token.accessToken ? `${token.accessToken.substring(0, 30)}...` : 'null'
+      });
+      
       return session;
     },
 

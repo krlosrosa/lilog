@@ -10,6 +10,7 @@ import { useState, useMemo } from "react";
 import { ListarFuncionariosPorCentroZodDtoOutput } from "@/_services/api/model";
 import { useAuthStore } from "@/_shared/stores/auth.store";
 import { Textarea } from "@/_shared/components/ui/textarea";
+import { AddFuncionario } from "@/_modules/funcionario/_views/addFuncionario";
 
 type Funcionario = ListarFuncionariosPorCentroZodDtoOutput[number]
 
@@ -175,6 +176,11 @@ export function AddFuncionarioDemandas({ funcionarioSelecionado, setFuncionarioS
                     <Users className="h-3 w-3 text-secondary-foreground" />
                   </div>
                   Funcionários disponíveis
+                  <AddFuncionario>
+                    <Button size="icon" variant="default" className="gap-1 px-2 ML-8 py-1 h-7 text-xs">
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                  </AddFuncionario>
                 </CardTitle>
                 {/* <AddFuncionario>
                   <Button size="icon" variant="outline" className="gap-1 px-2 py-1 h-7 text-xs">

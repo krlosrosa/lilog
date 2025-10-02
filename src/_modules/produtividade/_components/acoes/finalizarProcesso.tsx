@@ -8,6 +8,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { FormTextAreaInput } from "@/_shared/components/hookForms/FormTextAreaInput";
 import { Form } from "@/_shared/components/hookForms/Form";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
+import { useState } from "react";
 
 
 const mergeFinalizarProdutividadeBody = produtividadeControllerFinalizarPickingBody.extend({
@@ -18,9 +19,15 @@ type FinalizarProdutividadeBody = z.infer<typeof mergeFinalizarProdutividadeBody
 
 export function FinalizarProdutividade() {
 
+  const [open, setOpen] = useState(false)
+
   const { mutate: finalizarProdutividade, isPending } = useProdutividadeControllerFinalizarPicking(callBackReactQuery({
     successMessage: 'Produtividade finalizada com sucesso!',
     errorMessage: 'Erro ao finalizar produtividade',
+    invalidateQueries: ["GetOverView"],
+    onSuccessCallback: () => {
+      setOpen(false)
+    }
   }))
 
   const onSubmit = (data: FinalizarProdutividadeBody) => {
@@ -31,7 +38,7 @@ export function FinalizarProdutividade() {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Finalizar Produtividade</Button>
       </DialogTrigger>
@@ -51,7 +58,7 @@ export function FinalizarProdutividade() {
             <FormInput name="palletId" label="Pallet ID" type="string" />
             <FormTextAreaInput name="observacao" label="Observação" />
           </div>
-          <DialogFooter className="gap-2">
+          <DialogFooter className="gap-2 mt-2">
             <DialogClose asChild>
               <Button type="button" variant="outline">Cancel</Button>
             </DialogClose>

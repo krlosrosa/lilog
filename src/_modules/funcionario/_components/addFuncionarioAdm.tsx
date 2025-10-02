@@ -1,6 +1,6 @@
 'use client'
 import { useAuthStore } from "@/_shared/stores/auth.store"
-import { useCriarFuncionarioAdm } from "@/_services/api/hooks/usuario/usuario"
+import { getListarFuncionariosAdmPorCentroQueryKey, useCriarFuncionarioAdm } from "@/_services/api/hooks/usuario/usuario"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/_shared/components/ui/dialog";
 import { FormInput } from "@/_shared/components/hookForms/FormInput";
 import { FormSelectInput } from "@/_shared/components/hookForms/FormSelectInput";
@@ -25,9 +25,11 @@ import { UserPlus } from "lucide-react";
 type AddFuncionarioAdmBody = z.infer<typeof addFuncionarioAdmSchema>;
 
 export function AddFuncionarioAdm() {
+  const queryKeys = getListarFuncionariosAdmPorCentroQueryKey()
   const {mutate: addFuncionarioAdm, isPending} = useCriarFuncionarioAdm( callBackReactQuery({
     successMessage: 'Funcionário Adm adicionado com sucesso!',
     errorMessage: 'Erro ao adicionar funcionário Adm',
+    invalidateQueries: queryKeys,
   }))
   const { centerId } = useAuthStore()
 

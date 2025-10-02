@@ -89,7 +89,7 @@ export default function DefinirProcesso({ filtros, setFiltros, open, setOpen }: 
                           Separação
                         </div>
                       </SelectItem>
-                      <SelectItem value="CONFERENCIA">
+                      <SelectItem value="CARREGAMENTO">
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                           Conferência

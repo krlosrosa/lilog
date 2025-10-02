@@ -3,13 +3,20 @@ import { FormInput } from "@/_shared/components/hookForms/FormInput";
 import { Button } from "@/_shared/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/_shared/components/ui/dialog";
 import { useAuthStore } from "@/_shared/stores/auth.store";
-import { useCriarNovoFuncionario } from "@/_services/api/hooks/usuario/usuario";
+import { getListarFuncionariosPorCentroQueryKey, useCriarNovoFuncionario } from "@/_services/api/hooks/usuario/usuario";
 import { criarNovoFuncionarioBody } from "@/_services/api/schema/usuario/usuario.zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
 import { useState } from "react";
+import { FormSelectInput, SelectOption } from "@/_shared/components/hookForms/FormSelectInput";
+
+const turnos: SelectOption[] = [
+  { value: 'MANHA', label: 'Manhã' },
+  { value: 'TARDE', label: 'Tarde' },
+  { value: 'NOITE', label: 'Noite' },
+]
 
 type AddFuncionarioBody = z.infer<typeof criarNovoFuncionarioBody>;
 
@@ -25,9 +32,14 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
     }
   })
 
-  const { mutate: addFuncionario } = useCriarNovoFuncionario(callBackReactQuery({
+
+  const queryKeysInvalidate = getListarFuncionariosPorCentroQueryKey(centerId)
+
+
+  const { mutate: addFuncionario, isPending } = useCriarNovoFuncionario(callBackReactQuery({
     successMessage: 'Funcionário adicionado com sucesso!',
-    errorMessage: 'Erro ao adicionar funcionário',    
+    errorMessage: 'Erro ao adicionar funcionário',
+    invalidateQueries: queryKeysInvalidate,
     onSuccessCallback: () => {
       setOpen(false)
     }
@@ -57,16 +69,20 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
               <div className="grid gap-4">
                 <FormInput name="id" label="ID" type="string" />
                 <FormInput name="nome" label="Nome" type="string" />
-                <FormInput name="turno" label="Turno" type="string" />
+                <FormSelectInput
+                className="w-full"
+                name="turno"
+                label="Turno"
+                options={turnos}
+              />
               </div>
-              <Button type="submit">Save changes</Button>
+              <div className="flex flex-col justify-end gap-2 mt-4">
+
+              <Button className="w-full" type="submit" disabled={isPending}>{isPending ? 'Adicionando...' : 'Adicionar Funcionário'}</Button>
+              <Button className="w-full" variant="outline" disabled={isPending}>Cancel</Button>
+              </div>
             </form>
           </FormProvider>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

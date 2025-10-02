@@ -19,15 +19,18 @@ export function StartProdutividade() {
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState<Funcionario | null>(null);
   const [observacao, setObservacao] = useState('');
   const [tab, setTab] = useState<'paletes' | 'funcionario'>('paletes');
+  const [open, setOpen] = useState(false);
   const { mutate: iniciarDemandaProdutividade, isPending } = useIniciarDemandaProdutividade(
     callBackReactQuery({
       successMessage: "Demanda iniciada com sucesso.",
       errorMessage: "Não foi possível iniciar a demanda. Tente novamente.",
+      invalidateQueries: ["GetOverView"],
       onSuccessCallback: () => {
         clear()
         setFuncionarioSelecionado(null)
         setObservacao('')
         setTab('paletes')
+        setOpen(false)
       }
     })
   )
@@ -48,7 +51,7 @@ export function StartProdutividade() {
   }
   
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="fixed bottom-6 right-6 z-50">
           <Button

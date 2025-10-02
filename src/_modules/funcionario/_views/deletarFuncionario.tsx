@@ -1,11 +1,12 @@
 'use client'
 import { Button } from "@/_shared/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/_shared/components/ui/dialog"
-import { useDeletarUsuario } from "@/_services/api/hooks/usuario/usuario"
+import { getListarFuncionariosPorCentroQueryKey, useDeletarUsuario } from "@/_services/api/hooks/usuario/usuario"
 import { AlertTriangle, Trash2 } from "lucide-react"
 import { useAuthStore } from "@/_shared/stores/auth.store"
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery"
 import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 
 type Props = {
   children: React.ReactNode
@@ -16,10 +17,13 @@ export function DeletarFuncionario({ children, funcionarioId }: Props) {
   const { centerId } = useAuthStore()
   const [open, setOpen] = useState(false)
 
-  const { mutate: deletarFuncionario } = useDeletarUsuario(
+  const queryKeys = getListarFuncionariosPorCentroQueryKey(centerId)
+
+  const { mutate: deletarFuncionario, isPending } = useDeletarUsuario(
     callBackReactQuery({
       successMessage: 'Funcionário deletado com sucesso',
       errorMessage: 'Erro ao deletar funcionário',
+      invalidateQueries: queryKeys,
       onSuccessCallback: () => {
         setOpen(false)
       }
@@ -76,6 +80,7 @@ export function DeletarFuncionario({ children, funcionarioId }: Props) {
                 type="button" 
                 variant="outline" 
                 className="flex-1 sm:flex-none"
+                disabled={isPending}
               >
                 Cancelar
               </Button>
@@ -84,9 +89,10 @@ export function DeletarFuncionario({ children, funcionarioId }: Props) {
               type="submit" 
               variant="destructive"
               className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 focus:ring-red-500"
+              disabled={isPending}
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              Deletar Funcionário
+              {isPending ? 'Deletando...' : 'Deletar Funcionário'}
             </Button>
           </DialogFooter>
         </form>

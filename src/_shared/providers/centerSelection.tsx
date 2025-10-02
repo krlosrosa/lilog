@@ -58,7 +58,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   // 4. Enquanto carrega, exibe o loader global. É isso que previne o "flash".
   if (isLoading) {
-    return <GlobalLoader />;
+    return <div>
+      <GlobalLoader />;
+      </div>
   }
 
   // 5. Se tudo estiver carregado e as validações passaram, renderiza a página solicitada.

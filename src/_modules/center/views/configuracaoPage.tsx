@@ -38,6 +38,8 @@ import { definirConfiguracaoImpressaoBody } from "@/_services/api/schema/centro/
 import { Controller, useFormContext } from "react-hook-form"
 import z from "zod"
 import { Header } from "@/_shared/components/ui/header"
+import { toast } from "react-toastify"
+import { useEffect } from "react"
 
 type DefinirConfiguracaoImpressaoBody = z.infer<
   typeof definirConfiguracaoImpressaoBody
@@ -68,20 +70,17 @@ export default function ConfiguracaoPage() {
     }
   })
 
+  useEffect(() => {
+    if (isError) {
+      toast.error("Erro ao buscar configurações")
+    }
+  }, [isError])
+
   if (isLoading) {
     return (
       <div className="space-y-4 p-4 md:p-6">
         <Header title="Configuração" subtitle="Configuração do centro" />
         <div>Carregando configurações...</div>
-      </div>
-    )
-  }
-
-  if (isError) {
-    return (
-      <div className="space-y-4 p-4 md:p-6">
-        <Header title="Configuração" subtitle="Configuração do centro" />
-        <div>Ocorreu um erro ao buscar as configurações.</div>
       </div>
     )
   }
