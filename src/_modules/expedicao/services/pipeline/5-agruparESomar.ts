@@ -1,6 +1,6 @@
 import type { EnrichedPickingMapItem } from '../../services/types/pickingMap';
 
-export function agruparESomar(
+export function   agruparESomar(
   lista: EnrichedPickingMapItem[],
 ): EnrichedPickingMapItem[] {
   const agrupado = lista.reduce(

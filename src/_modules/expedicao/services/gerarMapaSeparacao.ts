@@ -1,4 +1,4 @@
-  import { ConvertXlsx } from "./convertXlsx/convertXlsxRepository";
+import { ConvertXlsx } from "./convertXlsx/convertXlsxRepository";
 import { distribuirPaletePorTipo } from "../services/pipeline/07-agruparPaletePorTipo";
 import { classificarPorCampos } from "../services/pipeline/08-classificarItens";
 import { splitPalete } from "../services/pipeline/09-splitPalete";
@@ -10,7 +10,7 @@ import { gerarGrupos } from "../services/pipeline/4-gerarGrupos";
 import { agruparESomar } from "../services/pipeline/5-agruparESomar";
 import { alocarCaixasEPaletes } from "../services/pipeline/6-alocarCaixasEPaletes";
 import { ImpressaoMapa } from "../services/types/pickingMap";
-import { Groups } from "../services/types/groups.type";  
+import { Groups } from "../services/types/groups.type";
 import { separarItensFifo } from "../services/pipeline/11-separarItensFifo";
 import { FilesState } from "../_components/0_upload/uploadFiles";
 import { ConfiguracaoImpressao } from "./types/configuracaoImpressao.type";
@@ -63,14 +63,27 @@ export async function gerarMapaSeparacao(
   const enrichedShipmentsWithGruposESomar = agruparESomar(
     enrichedShipmentsWithGrupos,
   );
+
+  const enrichedShipmentsWithGruposESomarLog = enrichedShipmentsWithGruposESomar.filter(item => item.codItem === "600089007");
+  console.log({enrichedShipmentsWithGruposESomarLog});
+
   const enrichedShipmentsWithCaixasEPaletes = alocarCaixasEPaletes(
     enrichedShipmentsWithGruposESomar,
   );
 
+const enrichedShipmentsWithCaixasEPaletesLog = enrichedShipmentsWithCaixasEPaletes.filter(item => item.codItem === "600089007");
+console.log({enrichedShipmentsWithCaixasEPaletesLog});
+
   const enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete = splitPalete({ items: enrichedShipmentsWithCaixasEPaletes, splitPalete: config.separarPaleteFull, splitUnidade: config.separarUnidades });
 
-  
+  const enrichedShipmentsWithCaixasEPaletesClassificadoSplitPaleteLog = enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete.filter(item => item.codItem === "600089007");
+  console.log({enrichedShipmentsWithCaixasEPaletesClassificadoSplitPaleteLog});
+
+
   const enrichedShipmentsWithFifo = separarItensFifo(enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete, config.segregarFifo);
+
+  const enrichedShipmentsWithFifoLog = enrichedShipmentsWithFifo.filter(item => item.codItem === "600089007");
+  console.log({enrichedShipmentsWithFifoLog});
 
   const enrichedShipmentsWithCaixasEPaletesClassificado =
     classificarPorCampos(
@@ -78,11 +91,18 @@ export async function gerarMapaSeparacao(
       ['id', 'produto.segmento', 'tipo', 'produto.pickWay'],
     );
 
+  const enrichedShipmentsWithCaixasEPaletesClassificadoLog = enrichedShipmentsWithCaixasEPaletesClassificado.filter(item => item.codItem === "600089007");
+  console.log({enrichedShipmentsWithCaixasEPaletesClassificadoLog});
+
   const enrichedShipmentsWithDistribuicao = distribuirPaletePorTipo({
     lista: enrichedShipmentsWithCaixasEPaletesClassificado,
     tipo: config.tipoQuebra,
     quantidade: config.valorQuebra ?? 0,
   });
+
+  const enrichedShipmentsWithDistribuicaoLog = enrichedShipmentsWithDistribuicao.filter(item => item.codItem === "600089007");
+  console.log({enrichedShipmentsWithDistribuicaoLog});
+
   const mapas = gerarMapa(enrichedShipmentsWithDistribuicao);
 
   return mapas;

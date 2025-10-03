@@ -48,7 +48,6 @@ export function gerarGrupos(
       ? `${shipment.transportId}`
       : `${shipment.transportId}-[${shipment.codCliente}]`;
     }
-    console.log({groupKey});
 
     if (tipo === 'CLIENTE') {
       groupKey =

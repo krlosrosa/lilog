@@ -7,7 +7,8 @@ export function alocarCaixasEPaletes(
     if (!item.produto) {
       return item;
     }
-    const { unPorCaixa, cxPorPallet, pesoUnidade } = item.produto;
+    const { unPorCaixa, cxPorPallet, pesoCaixa } = item.produto;
+    const pesoUnidade = pesoCaixa / unPorCaixa
     const totalUnidades = item.quantidade;
     const caixasDeUnidades = Math.floor(totalUnidades / unPorCaixa);
     const unidadesRestantes = totalUnidades % unPorCaixa;
@@ -20,6 +21,16 @@ export function alocarCaixasEPaletes(
     const pesoCaixas = caixasRestantes * unPorCaixa * pesoUnidade;
     const pesoPaletes =
       paletesDeCaixas * cxPorPallet * unPorCaixa * pesoUnidade;
+
+      console.log(
+        {
+          produto: item.produto,
+          pesoUnidade,
+          pesoUnidades,
+          pesoCaixas,
+          pesoPaletes
+        }
+      )
 
     return {
       ...item,
