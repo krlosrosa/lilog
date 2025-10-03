@@ -70,11 +70,6 @@ export default function ConfiguracaoPage() {
     }
   })
 
-  useEffect(() => {
-    if (isError) {
-      toast.error("Erro ao buscar configurações")
-    }
-  }, [isError])
 
   if (isLoading) {
     return (
