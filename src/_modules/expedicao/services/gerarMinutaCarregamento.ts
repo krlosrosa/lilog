@@ -30,8 +30,8 @@ import { gerarMinuta } from "../services/pipeline/12-gerarMinuta";
     // Enriquecer itens
     const enrichedShipments = enriquecerItems(
       shipments,
-      routingPlans,
       products,
+      routingPlans,
     );
     // Transformar quantidades em Unidade
     const transformQuantities =
@@ -55,6 +55,6 @@ import { gerarMinuta } from "../services/pipeline/12-gerarMinuta";
     );
     // Gerar mapas
     const mapas = gerarMinuta(enrichedShipmentsWithGruposESomarMinuta);
-
+    console.log({mapas})
     return mapas;
   }

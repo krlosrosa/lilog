@@ -8,6 +8,7 @@ import { FormInput } from "@/_shared/components/hookForms/FormInput";
 import { FormSelectInput } from "@/_shared/components/hookForms/FormSelectInput";
 import { Plus } from "lucide-react";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
+import { useState } from "react";
 
 type AdicionarNovoCentroBody = z.infer<typeof criarNovoCentroBody>;
 
@@ -23,6 +24,7 @@ const stateOptions = [
 ];
 
 export default function AdicionarNovoCentro() {
+  const [open, setOpen] = useState(false)
   const { mutate: criarNovoCentro, isPending } = useCriarNovoCentro(
     callBackReactQuery({
       successMessage: 'Centro adicionado com sucesso!',
@@ -37,7 +39,7 @@ export default function AdicionarNovoCentro() {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="gap-2">
           <Plus className="h-4 w-4" />
@@ -81,7 +83,7 @@ export default function AdicionarNovoCentro() {
           </div>
           
           <DialogFooter className="gap-2">
-            <Button type="button" variant="outline">
+            <Button onClick={()=> setOpen(false)} type="button" variant="outline">
               Cancelar
             </Button>
             <Button type="submit" disabled={isPending}>

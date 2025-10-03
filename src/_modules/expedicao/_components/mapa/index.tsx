@@ -47,7 +47,7 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
     pageStyle: `
     @page {
      size: A4;
-     margin-top: 0mm;
+     margin-top: 10mm;
      margin-bottom: 20mm;
      margin-left: 5mm;
      margin-right: 5mm;

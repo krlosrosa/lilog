@@ -43,8 +43,8 @@ export async function gerarMapaSeparacao(
 
   const enrichedShipments = enriquecerItems(
     shipments,
-    routingPlans,
     products,
+    routingPlans,
   );
   const transformQuantities =
     transformarQuantidadeEmUnidade(enrichedShipments);
@@ -64,26 +64,12 @@ export async function gerarMapaSeparacao(
     enrichedShipmentsWithGrupos,
   );
 
-  const enrichedShipmentsWithGruposESomarLog = enrichedShipmentsWithGruposESomar.filter(item => item.codItem === "600089007");
-  console.log({enrichedShipmentsWithGruposESomarLog});
-
   const enrichedShipmentsWithCaixasEPaletes = alocarCaixasEPaletes(
     enrichedShipmentsWithGruposESomar,
   );
 
-const enrichedShipmentsWithCaixasEPaletesLog = enrichedShipmentsWithCaixasEPaletes.filter(item => item.codItem === "600089007");
-console.log({enrichedShipmentsWithCaixasEPaletesLog});
-
   const enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete = splitPalete({ items: enrichedShipmentsWithCaixasEPaletes, splitPalete: config.separarPaleteFull, splitUnidade: config.separarUnidades });
-
-  const enrichedShipmentsWithCaixasEPaletesClassificadoSplitPaleteLog = enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete.filter(item => item.codItem === "600089007");
-  console.log({enrichedShipmentsWithCaixasEPaletesClassificadoSplitPaleteLog});
-
-
   const enrichedShipmentsWithFifo = separarItensFifo(enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete, config.segregarFifo);
-
-  const enrichedShipmentsWithFifoLog = enrichedShipmentsWithFifo.filter(item => item.codItem === "600089007");
-  console.log({enrichedShipmentsWithFifoLog});
 
   const enrichedShipmentsWithCaixasEPaletesClassificado =
     classificarPorCampos(
@@ -91,17 +77,11 @@ console.log({enrichedShipmentsWithCaixasEPaletesLog});
       ['id', 'produto.segmento', 'tipo', 'produto.pickWay'],
     );
 
-  const enrichedShipmentsWithCaixasEPaletesClassificadoLog = enrichedShipmentsWithCaixasEPaletesClassificado.filter(item => item.codItem === "600089007");
-  console.log({enrichedShipmentsWithCaixasEPaletesClassificadoLog});
-
   const enrichedShipmentsWithDistribuicao = distribuirPaletePorTipo({
     lista: enrichedShipmentsWithCaixasEPaletesClassificado,
     tipo: config.tipoQuebra,
     quantidade: config.valorQuebra ?? 0,
   });
-
-  const enrichedShipmentsWithDistribuicaoLog = enrichedShipmentsWithDistribuicao.filter(item => item.codItem === "600089007");
-  console.log({enrichedShipmentsWithDistribuicaoLog});
 
   const mapas = gerarMapa(enrichedShipmentsWithDistribuicao);
 

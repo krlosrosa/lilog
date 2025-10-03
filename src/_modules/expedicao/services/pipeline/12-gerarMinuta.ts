@@ -11,8 +11,6 @@ export function gerarMinuta(
   const mapaPorChave = new Map<string, EnrichedPickingMapItem[]>();
   // Agrupa os itens por chave composta
   for (const item of items) {
-    if (!item.rota) continue;
-
     const chave = `${item.id}`;
     if (!mapaPorChave.has(chave)) {
       mapaPorChave.set(chave, []);
@@ -24,7 +22,7 @@ export function gerarMinuta(
 
   for (const [chave, grupo] of mapaPorChave.entries()) {
     const primeiro = grupo[0];
-    const rota = primeiro.rota!;
+    const rota = primeiro.rota;
 
     const codClientes = Array.from(new Set(grupo.map((i) => i.codCliente)));
     const nomeClientes = Array.from(new Set(grupo.map((i) => i.nomeCliente)));
@@ -61,16 +59,16 @@ export function gerarMinuta(
       id: primeiro.id ?? '',
       linhasVisitadas: itens.reduce((acc, item) => acc + item.visitas, 0),
       empresa: primeiro.produto?.empresa ?? '',
-      rota: rota.rota,
+      rota: rota?.rota || '',
       transportId: primeiro.transportId,
       placa: primeiro.placa,
       remessa: primeiro.remessa,
-      sequencia: rota.sequencia,
-      transportadora: rota.transportadora,
-      perfilUtilizado: rota.perfilUtilizado,
-      prioridade: rota.prioridade ?? 0,
-      infoAdicionaisI: rota.infoAdicionaisI ?? '',
-      infoAdicionaisII: rota.infoAdicionaisII ?? '',
+      sequencia: rota?.sequencia || 0,
+      transportadora: rota?.transportadora || '',
+      perfilUtilizado: rota?.perfilUtilizado || '',
+      prioridade: rota?.prioridade ?? 0,
+      infoAdicionaisI: rota?.infoAdicionaisI ?? '',
+      infoAdicionaisII: rota?.infoAdicionaisII ?? '',
       segmento: primeiro.produto?.segmento ?? '',
       codClientes,
       nomeClientes,

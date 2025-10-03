@@ -15,6 +15,7 @@ import { Input } from "@/_shared/components/ui/input"
 import { UserMinus, Plus, XIcon } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useConfigGroupsImpressao } from "../../_stores/useConfigGroupsImpressao"
+import { UploadClientesSegregados } from "./uploadSegregarClientes"
 
 export default function SegregarClientes() {
   const { segregarClientes, setSegregarClientes } = useConfigGroupsImpressao()
@@ -47,6 +48,16 @@ export default function SegregarClientes() {
     }
   }
 
+  function handleSegregedClientes(clientes: string[]) {
+    let dados: string[] = []
+    if(segregarClientes){
+      dados = [...segregarClientes, ...clientes]
+    } else{
+      dados = [...clientes]
+    }
+    setSegregarClientes(dados);
+  }
+
   return (
     <div className="space-y-4">
       <Accordion type="single" collapsible>
@@ -76,6 +87,7 @@ export default function SegregarClientes() {
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
+                  <UploadClientesSegregados onUploadComplete={handleSegregedClientes} />
                 </div>
               </CardContent>
             </Card>

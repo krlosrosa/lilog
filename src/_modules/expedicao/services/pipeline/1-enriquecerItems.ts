@@ -7,13 +7,13 @@ import type {
 
 export function enriquecerItems(
   shipments: ShipmentPickingMapItem[],
-  routingPlans: RoutingPickingMapItem[],
   products: ProductsPickingMapItem[],
+  routingPlans?: RoutingPickingMapItem[],
 ): EnrichedPickingMapItem[] {
   return shipments.map((shipment) => {
     const rota =
-      routingPlans.find((route) => route.codCliente === shipment.codCliente) ||
-      routingPlans.find(
+      routingPlans?.find((route) => route.codCliente === shipment.codCliente) ||
+      routingPlans?.find(
         (route) => route.transportId === shipment.transportId,
       ) ||
       null;
