@@ -1,6 +1,7 @@
 // app/api/graphql/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { GraphQLClient } from 'graphql-request';
+import { auth } from '@/auth'; // 👈 Importe suas authOptions
 
 const GRAPHQL_ENDPOINT = `${process.env.NEXT_PUBLIC_TARGET_URL}/graphql`;
 
@@ -11,6 +12,11 @@ interface GraphQLRequestBody {
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  const session = await auth();
+  const token = session?.user?.accessToken;
+  if (!token) {
+    return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+  }
   try {
     // Parse o body da requisição
     const body: GraphQLRequestBody = await req.json();
@@ -37,7 +43,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // Cria o client GraphQL
     const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'identity',
+        // Usa o token obtido de forma segura no servidor
+        Authorization: `Bearer ${token}`, 
+      },
     });
 
     // Faz a requisição GraphQL
@@ -73,6 +84,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
 // Também suporta GET para queries simples (opcional)
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  const session = await auth();
+  const token = session?.user?.accessToken;
+  if (!token) {
+    return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+  }
   try {
     const { searchParams } = new URL(req.url);
     const query = searchParams.get('query');
@@ -114,7 +130,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     // Cria o client GraphQL
     const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'identity',
+        // Usa o token obtido de forma segura no servidor
+        Authorization: `Bearer ${token}`, 
+      },
     });
 
     // Faz a requisição
