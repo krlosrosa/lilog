@@ -24,16 +24,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Copia headers
-    const headers: Record<string, string> = {};
+    // Copia headers da requisição
+    const headers: Record<string, string> = {
+      'Accept-Encoding': 'identity', // 👈 força resposta não comprimida
+    };
     req.headers.forEach((value, key) => {
-      if (key !== 'host' && key !== 'connection' && key !== 'content-length' && key !== 'content-type') {
+      if (key !== 'host' && key !== 'connection' && key !== 'content-length') {
         headers[key] = value;
       }
     });
-
-    headers['Content-Type'] = 'application/json';
-    headers['Accept-Encoding'] = 'identity'; // Garante uma resposta não comprimida
 
     // Cria o client GraphQL
     const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
@@ -86,8 +85,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    
-
     // Parse variables se existir
     let variables: Record<string, any> | undefined;
     if (variablesParam) {
@@ -102,15 +99,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     // Copia headers
-    const headers: Record<string, string> = {};
+    const headers: Record<string, string> = {
+      'Accept-Encoding': 'identity', // 👈 força resposta não comprimida
+    };
     req.headers.forEach((value, key) => {
-      if (key !== 'host' && key !== 'connection' && key !== 'content-length' && key !== 'content-type') {
+      if (key !== 'host' && key !== 'connection') {
         headers[key] = value;
       }
     });
-
-    headers['Content-Type'] = 'application/json';
-    headers['Accept-Encoding'] = 'identity'; // Garante uma resposta não comprimida
 
     // Cria o client GraphQL
     const client = new GraphQLClient(GRAPHQL_ENDPOINT, {
