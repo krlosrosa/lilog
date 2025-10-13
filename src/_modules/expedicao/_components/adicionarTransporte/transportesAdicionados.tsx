@@ -219,7 +219,7 @@ export default function TransportesAdicionados({
         </CardContent>
         <CardFooter className="flex flex-col items-end gap-2">
           <ModaConfirmacaoAddTransporte onSubmit={handleAddTransporte}>
-            <Button disabled={isAdding || transportes.length === 0 || transportesIniciados.length > 0}>
+            <Button>
               {isAdding ? "Adicionando..." : "Adicionar Transporte"}
             </Button>
           </ModaConfirmacaoAddTransporte>
