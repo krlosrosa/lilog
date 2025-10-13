@@ -317,7 +317,6 @@ export default function DashboardPage() {
 
   // Processar dados para os gráficos
   const dailyTrendData = data.produtividadeDiaDia.map(item => ({
-    data: format(new Date(item.dataRegistro), "dd/MM", { locale: ptBR }),
     totalCaixas: item.totalCaixas,
     horasTrabalhadas: item.horasTrabalhadas,
     produtividade: item.produtividade

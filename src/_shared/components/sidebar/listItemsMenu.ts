@@ -41,7 +41,7 @@ export const navItems: NavItem[] = [
       {
         label: "Anomalias",
         icon: TriangleAlert,
-        href: "/produtividade/anomalias",
+        href: "/produtividade/anomalias", 
         feature: "PRODUTIVIDADE"
       },
     ]
