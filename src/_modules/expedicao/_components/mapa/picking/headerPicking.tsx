@@ -83,9 +83,9 @@ export const HeaderPicking = memo(({ mapa, tipo, exibirCliente }: HeaderProps) =
           </div>
 
           {/* QR Code */}
-          <div className="col-span-1 flex flex-col items-center justify-center text-center">
+          {mapa.tipo !== 'palete' && <div className="col-span-1 flex flex-col items-center justify-center text-center">
             <QRCodeSVG value={mapa.paleteId} size={100} />
-          </div>
+          </div>}
         </div>
 
         {/* Clientes e Informações Adicionais */}

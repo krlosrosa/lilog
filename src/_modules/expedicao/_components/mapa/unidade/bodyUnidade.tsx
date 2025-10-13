@@ -38,8 +38,8 @@ export const BodyUnidade = memo(({ itens, config, transporteId }: BodyProps) => 
               <RowHeader extraClass="w-[10%]">SKU</RowHeader>
               <RowHeader extraClass="w-[30%]">Descrição</RowHeader>
               <RowHeader extraClass="w-[10%]">Lote</RowHeader>
-              <RowHeader extraClass="w-[10%]">Data de Fabricação</RowHeader>
-              <RowHeader extraClass="w-[10%]">Data Máxima</RowHeader>
+              <RowHeader extraClass="w-[10%]">Fab</RowHeader>
+              <RowHeader extraClass="w-[10%]">Max</RowHeader>
               <RowHeader extraClass="w-[5%]">Unid.</RowHeader>
               <RowHeader extraClass="w-[10%]">Faixa</RowHeader>
             </tr>
