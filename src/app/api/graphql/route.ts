@@ -25,7 +25,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Copia headers da requisição
-    const headers: Record<string, string> = {};
+    const headers: Record<string, string> = {
+      'Accept-Encoding': 'identity', // 👈 força resposta não comprimida
+    };
     req.headers.forEach((value, key) => {
       if (key !== 'host' && key !== 'connection' && key !== 'content-length') {
         headers[key] = value;
