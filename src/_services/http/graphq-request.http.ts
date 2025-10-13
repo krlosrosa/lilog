@@ -1,38 +1,39 @@
 import { getSession } from 'next-auth/react';
+import axios, { AxiosRequestHeaders } from 'axios';
 
-export const graphqlRequestFetcher = <TData, TVariables extends { [key: string]: any }>(
+export const graphqlRequestFetcher = <
+  TData,
+  TVariables extends { [key: string]: any }
+>(
   query: string,
   variables?: TVariables,
-  options?: RequestInit['headers'],
+  options?: AxiosRequestHeaders,
 ) => {
   return async (): Promise<TData> => {
     const session = await getSession();
     const token = session?.user?.accessToken;
 
-    const response = await fetch('/api/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        ...options, // caso queira passar headers extras
-      },
-      body: JSON.stringify({
-        query,
-        variables
-      })
-    });
+    try {
+      const response = await axios.post(
+        '/api/graphql',
+        {
+          query,
+          variables,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            ...options, // headers extras
+          },
+        },
+      );
 
-    // Parse o JSON e retorne apenas os dados
-    const json = await response.json();
+      return response.data;
 
-    // Normalmente, GraphQL retorna { data, errors }, então pegamos apenas data
-    if (json.errors) {
-      throw new Error(JSON.stringify(json.errors));
+    } catch (error: any) {
+      // axios já lança erro em status >= 400
+      throw new Error(error?.message || 'Erro na requisição GraphQL');
     }
-
-    // Pode vir "puro" (ex: { GetOverview: {...} }) ou dentro de { data }
-    const data = json;
-
-    return data as TData; 
   };
 };
