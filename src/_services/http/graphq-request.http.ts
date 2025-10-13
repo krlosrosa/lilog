@@ -31,8 +31,8 @@ export const graphqlRequestFetcher = <TData, TVariables extends { [key: string]:
     }
 
     // Pode vir "puro" (ex: { GetOverview: {...} }) ou dentro de { data }
-    const data = json.data ?? json;
+    const data = json;
 
-    return data as TData;
+    return data as TData; 
   };
 };
