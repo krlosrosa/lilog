@@ -7,7 +7,6 @@
  */
 
 export type DashCentrosZodDtoProdutividadeDiaDiaItem = {
-  dataRegistro: string;
   totalCaixas: number;
   horasTrabalhadas: number;
   produtividade: number;

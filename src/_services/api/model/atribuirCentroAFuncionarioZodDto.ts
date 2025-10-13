@@ -11,4 +11,5 @@ export interface AtribuirCentroAFuncionarioZodDto {
   centerId: string;
   userId: string;
   role: AtribuirCentroAFuncionarioZodDtoRole;
+  processo?: string;
 }

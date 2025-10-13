@@ -75,7 +75,7 @@ export function FinalizarPausaGeral({ processo }: { processo: string | null }) {
               options={turnos}
             />
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>

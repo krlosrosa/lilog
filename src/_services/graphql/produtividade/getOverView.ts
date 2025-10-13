@@ -29,6 +29,7 @@ query GetOverView(
     empresa
     processo
     segmento
+    obs
   },
   overViewProdutividade(overViewProdutividadeCommand: $inputOverview){
     processos

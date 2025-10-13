@@ -23,6 +23,7 @@ export function UploadClientesSegregados({ onUploadComplete }: UploadClientesSeg
       const clientes = await (await convertFileToClientesSegregados(file)).map((item) => item.codCliente)
       if(onUploadComplete){
         onUploadComplete(clientes)
+        event.target.value = ''
       }
     }
   }

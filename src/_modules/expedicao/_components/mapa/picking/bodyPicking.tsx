@@ -32,7 +32,6 @@ export const BodyPicking = memo(({ itens, config, transporteId }: BodyProps) => 
               <th></th>
               <th></th>
               <th></th>
-
             </tr>
             <tr className='bg-gray-100 print:bg-gray-200'>
               <RowHeader extraClass="w-[10%]">Endereço</RowHeader>

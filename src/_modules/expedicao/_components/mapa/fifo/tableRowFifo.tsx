@@ -16,6 +16,7 @@ export const TableRowFifo = ({ item, index, config }: TableRowProps) => {
         index % 2 === 0 ? "bg-white" : "bg-gray-25 print:bg-gray-50"
       } hover:bg-gray-50 print:hover:bg-gray-50`}
     >
+      <RowCell extraClass="w-[10%]">{item.endereco}</RowCell>
       <RowCell extraClass="w-[10%]">{item.sku}</RowCell>
       <RowCell extraClass="w-[30%] text-[10px] break-words">{item.descricao}</RowCell>
       <RowCell extraClass="w-[10%]">{item.lote}</RowCell>
@@ -25,7 +26,6 @@ export const TableRowFifo = ({ item, index, config }: TableRowProps) => {
       <RowCell extraClass="w-[10%]">
         {format(item.dtMaxima, "dd/MM/yyyy", { locale: ptBR })}
       </RowCell>
-      <RowCell extraClass="w-[10%]">{item.endereco}</RowCell>
       <RowCell extraClass="w-[5%]">{item.quantidadeCaixas}</RowCell>
       {!config?.separarUnidades && (
         <RowCell extraClass="w-[5%]">{item.quantidade}</RowCell>

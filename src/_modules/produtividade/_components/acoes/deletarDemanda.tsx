@@ -14,12 +14,15 @@ export function DeletarDemanda() {
   const [open, setOpen] = useState(false)
   const [palletId, setPalletId] = useState("")
 
-    const { mutate: deletarDemanda, isPending } = useDeletarDemanda(
-      callBackReactQuery({
-        successMessage: "Demanda deletada com sucesso.",
-        errorMessage: "Não foi possível deletar a demanda. Tente novamente.",
-      })
-    )
+  const { mutate: deletarDemanda, isPending } = useDeletarDemanda(
+    callBackReactQuery({
+      successMessage: "Demanda deletada com sucesso.",
+      errorMessage: "Não foi possível deletar a demanda. Tente novamente.",
+      onSuccessCallback: () => {
+        setOpen(false)
+      }
+    })
+  )
 
   const handleConfirm = () => {
     if (!palletId || palletId.trim().length === 0) {

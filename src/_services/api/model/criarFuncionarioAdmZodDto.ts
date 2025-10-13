@@ -14,4 +14,5 @@ export interface CriarFuncionarioAdmZodDto {
   ultimoNome: string;
   credencial: string;
   turno: string;
+  processo?: string;
 }

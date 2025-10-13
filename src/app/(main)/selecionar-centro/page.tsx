@@ -12,6 +12,10 @@ export default function SelecionarCentro() {
   const { centerId, selectCenter, user } = useAuthStore();
   const { data: minhaInfo, isLoading } = useMinhaInfo();
 
+
+  if(isLoading) return <div>carregando</div>
+
+
   const handleSelectCenter = (centerId: string) => {
     selectCenter(centerId);
   };
@@ -110,21 +114,7 @@ export default function SelecionarCentro() {
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Permissão:</span>
-                    <Badge variant={getRoleVariant(permission.role)}>
-                      {getRoleLabel(permission.role)}
-                    </Badge>
-                  </div>
-                  
-                  {permission.processo && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Processo:</span>
-                      <span className="text-sm font-medium">{permission.processo}</span>
-                    </div>
-                  )}
-
+                <div className="space-y-3">                  
                   <Button 
                     className="w-full" 
                     variant={centerId === permission.centerId ? "default" : "outline"}

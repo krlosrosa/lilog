@@ -21,8 +21,12 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  AnomaliaPorCentroZodDto,
+  AnomaliasPorCentroParams,
+  DashCentroIndividualParams,
   DashCentrosParams,
-  DashCentrosZodDto
+  DashCentrosZodDto,
+  DashUmCentrosZodDto
 } from '../../model';
 
 import { axiosFetcher } from '../../../http/axios.http';
@@ -111,6 +115,196 @@ export function useDashCentros<TData = Awaited<ReturnType<typeof dashCentros>>, 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getDashCentrosQueryOptions(params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Dashboard por centros
+ */
+export const dashCentroIndividual = (
+    centerId: string,
+    params: DashCentroIndividualParams,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<DashUmCentrosZodDto>(
+      {url: `/dashboard/dash/${centerId}`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getDashCentroIndividualQueryKey = (centerId?: string,
+    params?: DashCentroIndividualParams,) => {
+    return [`/dashboard/dash/${centerId}`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getDashCentroIndividualQueryOptions = <TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(centerId: string,
+    params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getDashCentroIndividualQueryKey(centerId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dashCentroIndividual>>> = ({ signal }) => dashCentroIndividual(centerId,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DashCentroIndividualQueryResult = NonNullable<Awaited<ReturnType<typeof dashCentroIndividual>>>
+export type DashCentroIndividualQueryError = ErrorType<null>
+
+
+export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: DashCentroIndividualParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof dashCentroIndividual>>,
+          TError,
+          Awaited<ReturnType<typeof dashCentroIndividual>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof dashCentroIndividual>>,
+          TError,
+          Awaited<ReturnType<typeof dashCentroIndividual>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Dashboard por centros
+ */
+
+export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getDashCentroIndividualQueryOptions(centerId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Buscar anomalias por centro
+ */
+export const anomaliasPorCentro = (
+    centerId: string,
+    params: AnomaliasPorCentroParams,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<AnomaliaPorCentroZodDto>(
+      {url: `/dashboard/anomalias-produtividade/${centerId}`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getAnomaliasPorCentroQueryKey = (centerId?: string,
+    params?: AnomaliasPorCentroParams,) => {
+    return [`/dashboard/anomalias-produtividade/${centerId}`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getAnomaliasPorCentroQueryOptions = <TData = Awaited<ReturnType<typeof anomaliasPorCentro>>, TError = ErrorType<null>>(centerId: string,
+    params: AnomaliasPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getAnomaliasPorCentroQueryKey(centerId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof anomaliasPorCentro>>> = ({ signal }) => anomaliasPorCentro(centerId,params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type AnomaliasPorCentroQueryResult = NonNullable<Awaited<ReturnType<typeof anomaliasPorCentro>>>
+export type AnomaliasPorCentroQueryError = ErrorType<null>
+
+
+export function useAnomaliasPorCentro<TData = Awaited<ReturnType<typeof anomaliasPorCentro>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: AnomaliasPorCentroParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof anomaliasPorCentro>>,
+          TError,
+          Awaited<ReturnType<typeof anomaliasPorCentro>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAnomaliasPorCentro<TData = Awaited<ReturnType<typeof anomaliasPorCentro>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: AnomaliasPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof anomaliasPorCentro>>,
+          TError,
+          Awaited<ReturnType<typeof anomaliasPorCentro>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAnomaliasPorCentro<TData = Awaited<ReturnType<typeof anomaliasPorCentro>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: AnomaliasPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Buscar anomalias por centro
+ */
+
+export function useAnomaliasPorCentro<TData = Awaited<ReturnType<typeof anomaliasPorCentro>>, TError = ErrorType<null>>(
+ centerId: string,
+    params: AnomaliasPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof anomaliasPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getAnomaliasPorCentroQueryOptions(centerId,params,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

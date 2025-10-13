@@ -11,5 +11,4 @@ export type DashCentrosZodDtoRankingProdutividadePorClusterItem = {
   horasTrabalhadas: number;
   cluster: string;
   produtividade: number;
-  centro: string;
 };

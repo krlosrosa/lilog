@@ -139,14 +139,14 @@ export default function ListagemFuncionariosAdm() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <AssociarFuncionarioACentro 
+                     {/* <AssociarFuncionarioACentro 
                         funcionario={funcionario}
                       >
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                           <Building2 className="mr-2 h-4 w-4" />
                           Associar ao Centro
                         </DropdownMenuItem>
-                      </AssociarFuncionarioACentro>
+                      </AssociarFuncionarioACentro> */}
                       <ResetSenha 
                         userId={funcionario.id} 
                         userName={funcionario.name}

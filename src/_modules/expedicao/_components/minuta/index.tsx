@@ -21,6 +21,7 @@ import { toast } from "react-toastify"
 import { useAdicionarPaletesSeparacao } from "@/_services/api/hooks/transporte/transporte"
 import { PaleteInputZodDto } from "@/_services/api/model"
 import { useSession } from "next-auth/react"
+import ProtocoloExpedicao from "../protocolos/protocolo"
 
 export function ImpressaoMinutaCarregamentoPage({
   setTab,
@@ -147,6 +148,7 @@ export function ImpressaoMinutaCarregamentoPage({
           <Button variant="ghost" onClick={() => setTab("configuracoes")}>
             Voltar para Configurações
           </Button>
+          <ProtocoloExpedicao tipo="CARREGAMENTO"/>
           <ModalConfirmaInputPaleteCarregamento
             disabled={isGenerating}
             onSubmit={handlePrint}

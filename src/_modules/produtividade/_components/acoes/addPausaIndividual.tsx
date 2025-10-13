@@ -54,7 +54,7 @@ export function AddPausaIndividual() {
           >
             <div className="grid gap-4 py-4">
               <FormInput name="paleteId" label="Palete ID" type="string" disabled={isPending} />
-              <FormSelectInput name="motivo" label="Motivo" options={motivosPausasIndividual} disabled={isPending} />
+              <FormSelectInput className="w-full" name="motivo" label="Motivo" options={motivosPausasIndividual} disabled={isPending} />
               <FormTextAreaInput name="descricao" label="Descrição" disabled={isPending} />
             </div>
             <DialogFooter>

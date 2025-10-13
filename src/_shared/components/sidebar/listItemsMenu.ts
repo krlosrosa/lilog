@@ -8,7 +8,8 @@ import {
   RotateCcw,
   ClipboardList,
   Settings,
-  Building2
+  Building2,
+  TriangleAlert
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -30,10 +31,21 @@ export const navItems: NavItem[] = [
         icon: Users,
         href: "/produtividade/funcionarios",
         feature: "PRODUTIVIDADE"
-      }
+      },
+      {
+        label: "Dashboard",
+        icon: BarChart3,
+        href: "/produtividade/dashboard",
+        feature: "PRODUTIVIDADE"
+      },
+      {
+        label: "Anomalias",
+        icon: TriangleAlert,
+        href: "/produtividade/anomalias",
+        feature: "PRODUTIVIDADE"
+      },
     ]
   },
-
   {
     label: "Expedição",
     icon: Truck,

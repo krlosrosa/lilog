@@ -19,8 +19,8 @@ export function AddFuncionarioEmMassa() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const { mutate: addFuncionarioEmMassa, isPending } = useCriarFuncionariosEmMassa(callBackReactQuery({
-    successMessage: 'Produtividade iniciada com sucesso!',
-    errorMessage: 'Erro ao iniciar produtividade',
+    successMessage: 'Funcionarios adicionados com sucesso',
+    errorMessage: 'Erro ao adicionar Funcionários',
   }))
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -32,7 +32,6 @@ import {
   TrendingUp, Award, Target, Activity, Loader2, AlertCircle, Users
 } from "lucide-react";
 import { useDashCentros } from "@/_services/api/hooks/dashboard/dashboard";
-import type { DashCentrosZodDto } from "@/_services/api/model";
 
 // ============================================
 // COLOR CONSTANTS

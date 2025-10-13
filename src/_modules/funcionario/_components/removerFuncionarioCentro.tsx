@@ -7,6 +7,7 @@ import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery"
 import { useAuthStore } from "@/_shared/stores/auth.store"
 import { AlertTriangle } from "lucide-react"
 import { useQueryClient } from "@tanstack/react-query"
+import { useState } from "react"
 
 interface RemoverFuncionarioCentroProps {
   children: React.ReactNode;
@@ -23,12 +24,14 @@ export default function RemoverFuncionarioCentro({
 
   const queryClient = useQueryClient()
   const queryKeys = getListarFuncionariosPorCentroQueryKey()
+  const [open, setOpen] = useState(false)
 
   const { mutate: removerFuncionarioCentro, isPending } = useDeletarUsuario(callBackReactQuery({
     successMessage: 'Funcionário removido com sucesso',
     errorMessage: 'Erro ao remover funcionário',
     onSuccessCallback: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys })
+      setOpen(false)
     },
     invalidateQueries: queryKeys,
   }))
@@ -43,7 +46,7 @@ export default function RemoverFuncionarioCentro({
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -57,7 +60,6 @@ export default function RemoverFuncionarioCentro({
             <p className="text-sm text-muted-foreground">
               Tem certeza que deseja remover este funcionário do centro?
             </p>
-          <pre>{JSON.stringify('carlos', null, 2)}</pre>
             <div className="rounded-lg border p-3 space-y-2">
               <div>
                 <p className="text-sm font-medium text-foreground">{userName}</p>

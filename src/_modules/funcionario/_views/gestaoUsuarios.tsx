@@ -1,6 +1,7 @@
 import { Header } from "@/_shared/components/ui/header";
 import { AddFuncionarioAdm } from "../_components/addFuncionarioAdm";
 import ListagemFuncionariosAdm from "../_components/listagemFuncionariosAdm";
+import AddFuncionarioAdmEmMassa from "../_components/addFuncionarioAdmEmMassa";
 
 export default function GestaoUsuarios() {
   return (
@@ -12,6 +13,7 @@ export default function GestaoUsuarios() {
             title="Gestão de Usuários" 
             subtitle="Gerencie todos os usuários do seu centro de distribuição" 
           />
+          <AddFuncionarioAdmEmMassa/>
         </div>
 
         {/* Users List Section */}

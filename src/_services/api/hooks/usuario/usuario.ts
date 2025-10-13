@@ -26,6 +26,7 @@ import type {
 
 import type {
   AtribuirCentroAFuncionarioZodDto,
+  CriarFuncionarioAdmEmMassaZodDto,
   CriarFuncionarioAdmZodDto,
   CriarFuncionariosEmMassaZodDto,
   CriarNovoFuncionarioZodDto,
@@ -190,6 +191,73 @@ export const useCriarFuncionarioAdm = <TError = ErrorType<null>,
       > => {
 
       const mutationOptions = getCriarFuncionarioAdmMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    /**
+ * @summary Cria um novo funcionário
+ */
+export const criarFuncionarioAdmEmMassa = (
+    centerId: string,
+    processo: string,
+    senha: string,
+    criarFuncionarioAdmEmMassaZodDto: BodyType<CriarFuncionarioAdmEmMassaZodDto>,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<null>(
+      {url: `/api/usuario/criar-funcionario-adm-em-massa/${centerId}/${processo}/${senha}`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: criarFuncionarioAdmEmMassaZodDto, signal
+    },
+      options);
+    }
+  
+
+
+export const getCriarFuncionarioAdmEmMassaMutationOptions = <TError = ErrorType<null>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>, TError,{centerId: string;processo: string;senha: string;data: BodyType<CriarFuncionarioAdmEmMassaZodDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>, TError,{centerId: string;processo: string;senha: string;data: BodyType<CriarFuncionarioAdmEmMassaZodDto>}, TContext> => {
+
+const mutationKey = ['criarFuncionarioAdmEmMassa'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>, {centerId: string;processo: string;senha: string;data: BodyType<CriarFuncionarioAdmEmMassaZodDto>}> = (props) => {
+          const {centerId,processo,senha,data} = props ?? {};
+
+          return  criarFuncionarioAdmEmMassa(centerId,processo,senha,data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CriarFuncionarioAdmEmMassaMutationResult = NonNullable<Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>>
+    export type CriarFuncionarioAdmEmMassaMutationBody = BodyType<CriarFuncionarioAdmEmMassaZodDto>
+    export type CriarFuncionarioAdmEmMassaMutationError = ErrorType<null>
+
+    /**
+ * @summary Cria um novo funcionário
+ */
+export const useCriarFuncionarioAdmEmMassa = <TError = ErrorType<null>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>, TError,{centerId: string;processo: string;senha: string;data: BodyType<CriarFuncionarioAdmEmMassaZodDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof criarFuncionarioAdmEmMassa>>,
+        TError,
+        {centerId: string;processo: string;senha: string;data: BodyType<CriarFuncionarioAdmEmMassaZodDto>},
+        TContext
+      > => {
+
+      const mutationOptions = getCriarFuncionarioAdmEmMassaMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
@@ -688,16 +756,14 @@ export const useDeletarUsuario = <TError = ErrorType<null>,
  * @summary Reseta a senha de um usuario
  */
 export const resetSenha = (
-    userId: BodyType<string>,
-    resetSenhaBody: string,
+    userId: string,
+    password: string,
  options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
 ) => {
       
       
       return axiosFetcher<null>(
-      {url: `/api/usuario/reset-senha/${userId}`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: resetSenhaBody, signal
+      {url: `/api/usuario/reset-senha/${userId}/${password}`, method: 'POST', signal
     },
       options);
     }
@@ -705,8 +771,8 @@ export const resetSenha = (
 
 
 export const getResetSenhaMutationOptions = <TError = ErrorType<null>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;data: BodyType<string>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
-): UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;data: BodyType<string>}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;password: string}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;password: string}, TContext> => {
 
 const mutationKey = ['resetSenha'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -718,10 +784,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof resetSenha>>, {userId: string;data: BodyType<string>}> = (props) => {
-          const {userId,data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof resetSenha>>, {userId: string;password: string}> = (props) => {
+          const {userId,password} = props ?? {};
 
-          return  resetSenha(userId,data,requestOptions)
+          return  resetSenha(userId,password,requestOptions)
         }
 
         
@@ -730,18 +796,18 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type ResetSenhaMutationResult = NonNullable<Awaited<ReturnType<typeof resetSenha>>>
-    export type ResetSenhaMutationBody = BodyType<string>
+    
     export type ResetSenhaMutationError = ErrorType<null>
 
     /**
  * @summary Reseta a senha de um usuario
  */
 export const useResetSenha = <TError = ErrorType<null>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;data: BodyType<string>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetSenha>>, TError,{userId: string;password: string}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof resetSenha>>,
         TError,
-        {userId: string;data: BodyType<string>},
+        {userId: string;password: string},
         TContext
       > => {
 

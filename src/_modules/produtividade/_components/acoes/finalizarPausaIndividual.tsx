@@ -41,10 +41,10 @@ export function FinalizarPausaIndividual() {
                   Finalize a pausa do pallet selecionado.
                 </DialogDescription>
               </DialogHeader>
-              <div className="grid gap-4">
+              <div className="grid gap-4 mt-2">
                 <FormInput name="palletId" label="Pallet ID" type="string" />
               </div>
-              <DialogFooter>
+              <DialogFooter className="mt-4">
                 <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>

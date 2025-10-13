@@ -31,7 +31,8 @@ export const criarFuncionarioAdmBody = zod.object({
   "primeiroNome": zod.string(),
   "ultimoNome": zod.string(),
   "credencial": zod.string(),
-  "turno": zod.string()
+  "turno": zod.string(),
+  "processo": zod.string().optional()
 })
 
 export const criarFuncionarioAdmResponse = zod.object({
@@ -41,6 +42,24 @@ export const criarFuncionarioAdmResponse = zod.object({
   "turno": zod.string(),
   "role": zod.string()
 })
+
+/**
+ * @summary Cria um novo funcionário
+ */
+export const criarFuncionarioAdmEmMassaParams = zod.object({
+  "centerId": zod.string(),
+  "processo": zod.string(),
+  "senha": zod.string()
+})
+
+export const criarFuncionarioAdmEmMassaBodyItem = zod.object({
+  "id": zod.string(),
+  "nome": zod.string(),
+  "primeiroNome": zod.string(),
+  "ultimoNome": zod.string(),
+  "turno": zod.string()
+})
+export const criarFuncionarioAdmEmMassaBody = zod.array(criarFuncionarioAdmEmMassaBodyItem)
 
 /**
  * @summary Cria um novo funcionário
@@ -79,7 +98,8 @@ export const criarFuncionariosEmMassaBody = zod.object({
 export const atribuirCentroAFuncionarioBody = zod.object({
   "centerId": zod.string(),
   "userId": zod.string(),
-  "role": zod.enum(['FUNCIONARIO', 'USER', 'ADMIN', 'MASTER'])
+  "role": zod.enum(['FUNCIONARIO', 'USER', 'ADMIN', 'MASTER']),
+  "processo": zod.string().optional()
 })
 
 /**
@@ -134,8 +154,7 @@ export const deletarUsuarioParams = zod.object({
  * @summary Reseta a senha de um usuario
  */
 export const resetSenhaParams = zod.object({
-  "userId": zod.string()
+  "userId": zod.string(),
+  "password": zod.string()
 })
-
-export const resetSenhaBody = zod.string()
 

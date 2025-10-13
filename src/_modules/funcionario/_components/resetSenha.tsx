@@ -31,9 +31,10 @@ export default function ResetSenha({ children, userId, userName }: ResetSenhaPro
   }))
 
   const handleSubmit = (data: ResetSenhaFormData) => {
+    const senha = JSON.stringify(data.novaSenha)
     resetSenha({
       userId: userId,
-      data: data.novaSenha,
+      password: data.novaSenha
     })
   }
 

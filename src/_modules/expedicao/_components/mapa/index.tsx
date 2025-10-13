@@ -29,6 +29,7 @@ import { BodyUnidade } from "./unidade/bodyUnidade"
 import { BodyFifo } from "./fifo/bodyFifo"
 import { BodyPicking } from "./picking/bodyPicking"
 import { useSession } from "next-auth/react"
+import ProtocoloExpedicao from "../protocolos/protocolo"
 
 export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
   const { centerId } = useAuthStore()
@@ -198,6 +199,7 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
           <Button variant="ghost" onClick={() => setTab("configuracoes")}>
             Voltar para Configurações
           </Button>
+          <ProtocoloExpedicao tipo="SEPARACAO"/>
           <Button onClick={generateMap} disabled={isGenerating}>
             {isGenerating ? "Gerando..." : "Gerar mapas"}
           </Button>
@@ -231,9 +233,9 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
                 >
                   <HeaderPicking mapa={mapa} tipo={tipo} exibirCliente={exibirCliente} />
                   {mapa.tipo === 'picking' && <BodyPicking transporteId={transporteId} config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'palete' && <BodyPalete config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'unidade' && <BodyUnidade config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'fifo' && <BodyFifo config={config} itens={mapa.itens} />}
+                  {mapa.tipo === 'palete' && <BodyPalete transporteId={transporteId} config={config} itens={mapa.itens} />}
+                  {mapa.tipo === 'unidade' && <BodyUnidade transporteId={transporteId} config={config} itens={mapa.itens} />}
+                  {mapa.tipo === 'fifo' && <BodyFifo transporteId={transporteId} config={config} itens={mapa.itens} />}
                 </div>
               })
             ) : (

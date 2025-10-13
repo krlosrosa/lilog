@@ -297,7 +297,6 @@ export default function TimelineDemanda({ infoDemanda }: TimelineDemandaProps) {
           <div className="text-xs text-muted-foreground">Pausas</div>
         </div>
       </div>
-
       {infoDemanda.obs && (
         <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
           <div className="flex items-start gap-2">

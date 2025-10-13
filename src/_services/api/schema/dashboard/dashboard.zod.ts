@@ -31,7 +31,6 @@ export const dashCentrosResponse = zod.object({
   "centro": zod.string()
 })),
   "produtividadeDiaDia": zod.array(zod.object({
-  "dataRegistro": zod.string(),
   "totalCaixas": zod.number(),
   "horasTrabalhadas": zod.number(),
   "produtividade": zod.number()
@@ -47,8 +46,89 @@ export const dashCentrosResponse = zod.object({
   "totalCaixas": zod.number(),
   "horasTrabalhadas": zod.number(),
   "cluster": zod.string(),
-  "produtividade": zod.number(),
-  "centro": zod.string()
+  "produtividade": zod.number()
 }))
 })
+
+/**
+ * @summary Dashboard por centros
+ */
+export const dashCentroIndividualParams = zod.object({
+  "centerId": zod.string()
+})
+
+export const dashCentroIndividualQueryParams = zod.object({
+  "dataInicio": zod.string(),
+  "dataFim": zod.string()
+})
+
+export const dashCentroIndividualResponse = zod.object({
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "totalDemandas": zod.number(),
+  "produtividade": zod.number(),
+  "topCincoProdutividade": zod.array(zod.object({
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "produtividade": zod.number(),
+  "id": zod.string(),
+  "nome": zod.string()
+})),
+  "topCincoPiores": zod.array(zod.object({
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "produtividade": zod.number(),
+  "id": zod.string(),
+  "nome": zod.string()
+})),
+  "produtividadeDiaDia": zod.array(zod.object({
+  "dataRegistro": zod.string(),
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "produtividade": zod.number()
+})),
+  "rankingProdutividadePorTurno": zod.array(zod.object({
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "produtividade": zod.number(),
+  "turno": zod.string()
+})),
+  "rankingProdutividadePorEmpresa": zod.array(zod.object({
+  "totalCaixas": zod.number(),
+  "horasTrabalhadas": zod.number(),
+  "produtividade": zod.number(),
+  "empresa": zod.string()
+}))
+})
+
+/**
+ * @summary Buscar anomalias por centro
+ */
+export const anomaliasPorCentroParams = zod.object({
+  "centerId": zod.string()
+})
+
+export const anomaliasPorCentroQueryParams = zod.object({
+  "dataInicio": zod.string(),
+  "dataFim": zod.string()
+})
+
+export const anomaliasPorCentroResponseItem = zod.object({
+  "id": zod.number().optional(),
+  "demandaId": zod.number(),
+  "centerId": zod.string(),
+  "funcionarioId": zod.string(),
+  "nomeFuncionario": zod.string(),
+  "cadastroPorId": zod.string(),
+  "nomeCadastradoPor": zod.string(),
+  "inicio": zod.string(),
+  "fim": zod.string().nullish(),
+  "caixas": zod.number(),
+  "unidades": zod.number(),
+  "paletes": zod.number(),
+  "enderecosVisitado": zod.number(),
+  "produtividade": zod.number(),
+  "motivoAnomalia": zod.string()
+})
+export const anomaliasPorCentroResponse = zod.array(anomaliasPorCentroResponseItem)
 

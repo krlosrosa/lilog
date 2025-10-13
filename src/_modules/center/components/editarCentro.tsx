@@ -82,6 +82,7 @@ export default function EditarCentro({ centro, children }: EditarCentroProps) {
             />
             
             <FormSelectInput
+              className="w-full"
               name="state"
               label="Estado"
               placeholder="Selecione o estado"
@@ -89,6 +90,7 @@ export default function EditarCentro({ centro, children }: EditarCentroProps) {
             />
             
             <FormSelectInput
+              className="w-full"
               name="cluster"
               label="Cluster"
               placeholder="Selecione o cluster"
