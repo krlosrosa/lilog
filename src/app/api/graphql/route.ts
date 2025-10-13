@@ -99,7 +99,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     // Copia headers
-    const headers: Record<string, string> = {};
+    const headers: Record<string, string> = {
+      'Accept-Encoding': 'identity', // 👈 força resposta não comprimida
+    };
     req.headers.forEach((value, key) => {
       if (key !== 'host' && key !== 'connection') {
         headers[key] = value;
