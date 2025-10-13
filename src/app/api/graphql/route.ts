@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GraphQLClient } from 'graphql-request';
 
-const GRAPHQL_ENDPOINT = 'http://localhost:4000/graphql';
+const GRAPHQL_ENDPOINT = `${process.env.NEXT_PUBLIC_TARGET_URL}/graphql`;
 
 interface GraphQLRequestBody {
   query: string;
