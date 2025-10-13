@@ -24,7 +24,6 @@ export default function HeaderProdutividade() {
       </p>
       {dataSelecionada && <Badge>{dataSelecionada}</Badge>}
       </div>
-      <pre>{JSON.stringify(filtros.status, null, 2)}</pre>
     </div>
   )
 }

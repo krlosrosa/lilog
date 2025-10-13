@@ -4,7 +4,7 @@ import { BuscarProdutividadeQuery } from "@/_services/graphql/produtividade/getP
 import { formatTime } from "@/_shared/utils/formatTime";
 import { formatDate } from "@/_shared/utils/formaData";
 import { getStatusColor } from "@/_shared/utils/gerColorStatus";
-import { formatName } from "@/_shared/utils/formatName";  
+import { formatName } from "@/_shared/utils/formatName";
 import TimelineDemandaModal from "./timeLineProdutividade";
 import { useState } from "react";
 type ProdutividadeArray = BuscarProdutividadeQuery['produtividade'][number]
@@ -58,6 +58,13 @@ export function CardProdutividade({ produtividade }: CardProdutividadeProps) {
 
             {/* Métricas Principais */}
             <div className="flex items-center gap-6">
+              {/* Caixas */}
+              <div className="text-right">
+                <div className="text-sm font-semibold text-gray-900">
+                  {produtividade.paletes.toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-500">Paletes</div>
+              </div>
               {/* Caixas */}
               <div className="text-right">
                 <div className="text-sm font-semibold text-gray-900">
@@ -117,7 +124,6 @@ export function CardProdutividade({ produtividade }: CardProdutividadeProps) {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 text-xs text-gray-500">
-                <span>Paletes: {produtividade.paletes}</span>
                 <span>Segmento: {produtividade.segmento}</span>
                 <span>ID: {produtividade.funcionarioId}</span>
               </div>
