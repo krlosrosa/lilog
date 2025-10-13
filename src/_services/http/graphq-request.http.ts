@@ -7,7 +7,7 @@ export const graphqlRequestFetcher = <
 >(
   query: string,
   variables?: TVariables,
-  options?: AxiosRequestHeaders,
+  options?: RequestInit['headers'],
 ) => {
   return async (): Promise<TData> => {
     const session = await getSession();
@@ -24,7 +24,7 @@ export const graphqlRequestFetcher = <
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-            ...options, // headers extras
+            ...options as AxiosRequestHeaders, // headers extras
           },
         },
       );
