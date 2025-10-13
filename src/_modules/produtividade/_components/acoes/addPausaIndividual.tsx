@@ -16,9 +16,9 @@ type AddPausaIndividualBody = z.infer<typeof produtividadeControllerAddPausaIndi
 
 const motivosPausasIndividual: SelectOption[] = [
   { value: 'FALTA_PRODUTO', label: 'Falta de Produto' },
-  { value: 'IDABANHEIRO', label: 'Banheiro' },
-  { value: 'REFEICAO', label: 'Refeição' },
-  { value: 'OUTROS', label: 'Outros' },
+  { value: 'PAUSA_TERMICA', label: 'Pausa Térmica' },
+  { value: 'HORARIO_REFEICAO', label: 'Horário de Refeição' },
+  { value: 'TREINAMENTO_FEEDBACK', label: 'Treinamento / Feedback' },
 ]
 
 export function AddPausaIndividual() {
