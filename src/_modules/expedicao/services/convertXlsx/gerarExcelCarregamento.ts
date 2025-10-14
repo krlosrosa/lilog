@@ -13,8 +13,6 @@ export function gerarExcelConferencia(mapas: ImpressaoMapa[], centerId: string, 
   const worksheet = XLSX.utils.json_to_sheet(resultado)
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'data');
-  // 3. Salva o arquivo Excel
-  XLSX.writeFile(workbook, `${centerId}-${data}-dados22.xlsx`);
   // 2. Gera o arquivo em memória como ArrayBuffer
   const excelBuffer = XLSX.write(workbook, {
     bookType: 'xlsx',
