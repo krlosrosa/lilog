@@ -204,7 +204,7 @@ export default function PaletesPendentesPage() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground">
-                        {palete.dataExpedicao}
+                        {formatDate(palete.dataExpedicao)}
                       </TableCell>
                     </TableRow>
                   ))}
