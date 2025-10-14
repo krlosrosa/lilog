@@ -21,9 +21,9 @@ import { useReactToPrint } from "react-to-print"
 import { PaleteInputZodDto } from "@/_services/api/model"
 import { useAdicionarPaletesSeparacao } from "@/_services/api/hooks/transporte/transporte"
 import { toast } from "react-toastify"
-import { ComboboxEmpresa } from "@/_modules/center/components/selecionarEmpresa"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { Skeleton } from "@/_shared/components/ui/skeleton"
+import { gerarExcelConferencia } from "../../services/convertXlsx/gerarExcelCarregamento"
 
 
 export function MapaDeCarregamento({
@@ -42,6 +42,9 @@ export function MapaDeCarregamento({
     contentRef: printRef,
     onBeforePrint: async () => {
       await handleAddPalete()
+    },
+    onAfterPrint() {
+      gerarExcelConferencia(mapas, centerId, new Date().toISOString())
     },
     pageStyle: `
     @page {

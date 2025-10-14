@@ -43,6 +43,9 @@ export default function TransportesAdicionados({
           toast.success("Transportes adicionados com sucesso!")
           setTab("configuracoes")
         },
+        onError(error, variables, onMutateResult, context) {
+          console.log(error)
+        },
       },
     })
 
