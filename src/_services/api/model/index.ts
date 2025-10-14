@@ -54,6 +54,8 @@ export * from './definirConfiguracaoImpressaoDto';
 export * from './definirConfiguracaoImpressaoDtoExibirInfoCabecalho';
 export * from './definirConfiguracaoImpressaoDtoTipoImpressao';
 export * from './definirConfiguracaoImpressaoDtoTipoQuebra';
+export * from './demandasNaoIniciadasZodDtoOutput';
+export * from './demandasNaoIniciadasZodDtoOutputItem';
 export * from './editarCentroDto';
 export * from './finalizarDemandaDevolucaoZodDto';
 export * from './finalizarDemandaDevolucaoZodDtoAnomaliaItem';

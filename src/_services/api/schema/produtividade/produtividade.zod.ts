@@ -103,3 +103,31 @@ export const produtividadeControllerBuscarProdutividadeQueryParams = zod.object(
 })
 })
 
+/**
+ * @summary ListarPaletesEmAberto
+ */
+export const listarPaletesEmAbertoParams = zod.object({
+  "centerId": zod.string(),
+  "data": zod.string(),
+  "processo": zod.string()
+})
+
+export const listarPaletesEmAbertoResponseItem = zod.object({
+  "id": zod.string(),
+  "status": zod.string(),
+  "criadoEm": zod.string(),
+  "empresa": zod.string(),
+  "quantidadeCaixas": zod.number(),
+  "quantidadeUnidades": zod.number(),
+  "quantidadePaletes": zod.number(),
+  "enderecoVisitado": zod.number(),
+  "segmento": zod.string(),
+  "transporteId": zod.string(),
+  "tipoProcesso": zod.string(),
+  "atualizadoEm": zod.string(),
+  "demandaId": zod.number().nullable(),
+  "validado": zod.boolean(),
+  "criadoPorId": zod.string()
+})
+export const listarPaletesEmAbertoResponse = zod.array(listarPaletesEmAbertoResponseItem)
+

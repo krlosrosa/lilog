@@ -28,6 +28,7 @@ import type {
   AddPausaIndividualDto,
   AddPauseGeralDto,
   CreateProdutividadeDto,
+  DemandasNaoIniciadasZodDtoOutput,
   FinalizarPauseGeralDto,
   FinalizarProdutividadeDto,
   ProdutividadeControllerBuscarProdutividadeParams
@@ -568,6 +569,107 @@ export function useProdutividadeControllerBuscarProdutividade<TData = Awaited<Re
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getProdutividadeControllerBuscarProdutividadeQueryOptions(centerId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary ListarPaletesEmAberto
+ */
+export const listarPaletesEmAberto = (
+    centerId: string,
+    data: string,
+    processo: string,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<DemandasNaoIniciadasZodDtoOutput>(
+      {url: `/api/produtividade/nao-finalizadas/${centerId}/${data}/${processo}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getListarPaletesEmAbertoQueryKey = (centerId?: string,
+    data?: string,
+    processo?: string,) => {
+    return [`/api/produtividade/nao-finalizadas/${centerId}/${data}/${processo}`] as const;
+    }
+
+    
+export const getListarPaletesEmAbertoQueryOptions = <TData = Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError = ErrorType<null>>(centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListarPaletesEmAbertoQueryKey(centerId,data,processo);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listarPaletesEmAberto>>> = ({ signal }) => listarPaletesEmAberto(centerId,data,processo, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(centerId && data && processo), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListarPaletesEmAbertoQueryResult = NonNullable<Awaited<ReturnType<typeof listarPaletesEmAberto>>>
+export type ListarPaletesEmAbertoQueryError = ErrorType<null>
+
+
+export function useListarPaletesEmAberto<TData = Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listarPaletesEmAberto>>,
+          TError,
+          Awaited<ReturnType<typeof listarPaletesEmAberto>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListarPaletesEmAberto<TData = Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listarPaletesEmAberto>>,
+          TError,
+          Awaited<ReturnType<typeof listarPaletesEmAberto>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListarPaletesEmAberto<TData = Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary ListarPaletesEmAberto
+ */
+
+export function useListarPaletesEmAberto<TData = Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listarPaletesEmAberto>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListarPaletesEmAbertoQueryOptions(centerId,data,processo,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

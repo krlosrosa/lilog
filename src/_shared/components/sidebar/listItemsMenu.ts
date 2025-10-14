@@ -9,7 +9,8 @@ import {
   ClipboardList,
   Settings,
   Building2,
-  TriangleAlert
+  TriangleAlert,
+  FileCheck2
 } from "lucide-react";
 
 export const navItems: NavItem[] = [
@@ -42,6 +43,12 @@ export const navItems: NavItem[] = [
         label: "Anomalias",
         icon: TriangleAlert,
         href: "/produtividade/anomalias", 
+        feature: "PRODUTIVIDADE"
+      },
+      {
+        label: "Não Iniciado",
+        icon: FileCheck2,
+        href: "/produtividade/paletes-pendentes", 
         feature: "PRODUTIVIDADE"
       },
     ]
