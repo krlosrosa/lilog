@@ -56,6 +56,7 @@ export function AuthSync() {
         email: session.user.email || '',
         accessToken: sessionToken,
         permissions: minhaInfo.listCenterRole || [],
+        empresa: minhaInfo.listCenterRole[0].empresa,
       };
 
       // A mágica acontece aqui: ao chamar o login, a store é atualizada.

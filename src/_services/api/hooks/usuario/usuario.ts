@@ -815,4 +815,66 @@ export const useResetSenha = <TError = ErrorType<null>,
 
       return useMutation(mutationOptions , queryClient);
     }
+    /**
+ * @summary Logout
+ */
+export const logout = (
+    id: string,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<null>(
+      {url: `/api/usuario/logout/${id}`, method: 'POST', signal
+    },
+      options);
+    }
+  
+
+
+export const getLogoutMutationOptions = <TError = ErrorType<null>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['logout'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logout>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  logout(id,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LogoutMutationResult = NonNullable<Awaited<ReturnType<typeof logout>>>
+    
+    export type LogoutMutationError = ErrorType<null>
+
+    /**
+ * @summary Logout
+ */
+export const useLogout = <TError = ErrorType<null>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof logout>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+
+      const mutationOptions = getLogoutMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
     

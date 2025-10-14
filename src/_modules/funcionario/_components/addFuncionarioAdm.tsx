@@ -14,7 +14,9 @@ const addFuncionarioAdmSchema = z.object({
   primeiroNome: z.string(),
   ultimoNome: z.string(),
   credencial: z.string(),
-  turno: z.enum(['MANHA', 'TARDE', 'NOITE'])
+  empresa: z.enum(['LDB', 'DPA', 'ITB']),
+  turno: z.enum(['MANHA', 'TARDE', 'NOITE']),
+  processo: z.enum(['EXPEDICAO', 'PRODUTIVIDADE'])
 });
 import { Button } from "@/_shared/components/ui/button";
 import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
@@ -26,7 +28,7 @@ type AddFuncionarioAdmBody = z.infer<typeof addFuncionarioAdmSchema>;
 
 export function AddFuncionarioAdm() {
   const queryKeys = getListarFuncionariosAdmPorCentroQueryKey()
-  const {mutate: addFuncionarioAdm, isPending} = useCriarFuncionarioAdm( callBackReactQuery({
+  const { mutate: addFuncionarioAdm, isPending } = useCriarFuncionarioAdm(callBackReactQuery({
     successMessage: 'Funcionário Adm adicionado com sucesso!',
     errorMessage: 'Erro ao adicionar funcionário Adm',
     invalidateQueries: queryKeys,
@@ -42,8 +44,8 @@ export function AddFuncionarioAdm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button 
-          size="lg" 
+        <Button
+          size="lg"
           className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 z-50"
         >
           <UserPlus className="h-6 w-6" />
@@ -69,14 +71,36 @@ export function AddFuncionarioAdm() {
             <FormInput name="primeiroNome" label="Primeiro Nome" type="string" />
             <FormInput name="ultimoNome" label="Último Nome" type="string" />
             <FormInput name="credencial" label="Credencial" type="string" />
-            <FormSelectInput 
-              name="turno" 
-              label="Turno" 
+            <FormSelectInput
+              className="w-full"
+              name="empresa"
+              label="empresa"
+              placeholder="Selecione o turno"
+              options={[
+                { value: 'LDB', label: 'Lactalis' },
+                { value: 'DPA', label: 'DPA' },
+                { value: 'ITB', label: 'Itambé' }
+              ]}
+            />
+                        <FormSelectInput
+              className="w-full"
+              name="turno"
+              label="Turno"
               placeholder="Selecione o turno"
               options={[
                 { value: 'MANHA', label: 'Manhã' },
                 { value: 'TARDE', label: 'Tarde' },
                 { value: 'NOITE', label: 'Noite' }
+              ]}
+            />
+            <FormSelectInput
+              className="w-full"
+              name="processo"
+              label="processo"
+              placeholder="Selecione o Processo"
+              options={[
+                { value: 'EXPEDICAO', label: 'Expedição' },
+                { value: 'PRODUTIVIDADE', label: 'Produtividade' },
               ]}
             />
             <Button type="submit" disabled={isPending} className="w-full">

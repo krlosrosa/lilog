@@ -4,7 +4,7 @@ export interface EnrichedPickingMapItem extends ShipmentPickingMapItem {
   faixa?: 'verde' | 'laranja' | 'amarelo' | 'vermelho';
   visitas: number;
   dataMaxima?: string;
-  caixa?: number;
+  caixa: number;
   pesoCaixa?: number;
   paletes?: number;
   pesoPallet?: number;

@@ -17,6 +17,7 @@ export interface User {
   email: string
   accessToken: string
   permissions: Permission[]
+  empresa: string
 }
 
 interface AuthState {
@@ -30,6 +31,7 @@ interface AuthState {
   logout: () => void;
   selectCenter: (centerId: string) => void;
   resetAll: () => void;
+  setEmpresa: (empresa: string) => void
 }
 
 // 🔧 função que constrói a instância de Ability dinamicamente
@@ -57,6 +59,7 @@ const buildAbility = (permissions: Permission[]): AppAbility => {
 
 export const useAuthStore = create<AuthState>()(
   persist(
+
     (set, get) => ({
       user: null,
       centerId: '',
@@ -64,7 +67,17 @@ export const useAuthStore = create<AuthState>()(
       needsCenterSelection: false,
       availableCenters: [],
       ability: new Ability<[Actions, Subjects]>([]),
-
+      setEmpresa: (empresa: string) =>
+        set((state) => {
+          if (!state.user) return state
+          return {
+            user: {
+              ...state.user,
+              empresa,
+            },
+          }
+        })
+      ,
       login: (user: User) => {
         const ability = buildAbility(user.permissions);
 

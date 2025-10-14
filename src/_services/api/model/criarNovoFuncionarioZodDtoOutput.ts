@@ -12,4 +12,5 @@ export interface CriarNovoFuncionarioZodDtoOutput {
   nome: string;
   turno: string;
   role: string;
+  empresa: string;
 }

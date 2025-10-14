@@ -22,6 +22,7 @@ export function enriquecerItems(
     );
 
     return {
+      caixa:0,
       tipo: 'picking',
       ...shipment,
       visitas: 1,

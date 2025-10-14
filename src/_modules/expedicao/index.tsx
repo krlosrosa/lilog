@@ -12,6 +12,7 @@ import { Header } from "@/_shared/components/ui/header";
 import ErrorsValidacao from "./_components/errorsValidacao";
 import { useAuthStore } from "@/_shared/stores/auth.store";
 import { useSession } from "next-auth/react";
+import { MapaDeCarregamento } from "./_components/carregamento";
 
 export default function ImpressaoMapa() {
   const [tab, setTab] = useState('upload');
@@ -27,6 +28,7 @@ export default function ImpressaoMapa() {
         <TabsTrigger value='upload'>Upload</TabsTrigger>
         <TabsTrigger value='minuta'>Minuta</TabsTrigger>
         <TabsTrigger value='mapa'>Separação</TabsTrigger>
+        <TabsTrigger value='carregamento'>Carregamento</TabsTrigger>
         <TabsTrigger value='transporte'>Transporte</TabsTrigger>
         <TabsTrigger value='validacaoDados'>Validar Entradas</TabsTrigger>
         <TabsTrigger value='configuracoes'>Configurações</TabsTrigger>
@@ -39,6 +41,9 @@ export default function ImpressaoMapa() {
       </TabsContent>
       <TabsContent value='mapa'>
         <Mapa setTab={setTab} />
+      </TabsContent>
+      <TabsContent value='carregamento'>
+        <MapaDeCarregamento setTab={setTab} />
       </TabsContent>
       <TabsContent value='transporte'>
         <TransportesAdicionados setTab={setTab} />

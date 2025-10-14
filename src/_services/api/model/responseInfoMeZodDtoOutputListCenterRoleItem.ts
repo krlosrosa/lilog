@@ -11,4 +11,5 @@ export type ResponseInfoMeZodDtoOutputListCenterRoleItem = {
   centerId: string;
   role: ResponseInfoMeZodDtoOutputListCenterRoleItemRole;
   processo: string;
+  empresa: string;
 };

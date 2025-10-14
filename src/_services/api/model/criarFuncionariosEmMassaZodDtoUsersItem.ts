@@ -10,4 +10,5 @@ export type CriarFuncionariosEmMassaZodDtoUsersItem = {
   id: string;
   name: string;
   turno: string;
+  empresa: string;
 };

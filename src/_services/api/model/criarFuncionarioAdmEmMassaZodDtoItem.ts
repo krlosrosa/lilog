@@ -12,4 +12,5 @@ export type CriarFuncionarioAdmEmMassaZodDtoItem = {
   primeiroNome: string;
   ultimoNome: string;
   turno: string;
+  empresa: string;
 };

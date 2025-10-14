@@ -23,27 +23,41 @@ export const BodyPicking = memo(({ itens, config, transporteId }: BodyProps) => 
   return (
     <div className='w-full bg-white'>
       <div className='overflow-hidden border border-gray-300'>
-        <table className='w-full table-fixed text-xs'>
+        {/* MUDANÇA PRINCIPAL: trocado de table-fixed para table-auto.
+          Isso faz com que as colunas se ajustem ao conteúdo.
+        */}
+        <table className='w-full table-auto text-xs'>
           <thead>
+            {/* Esta primeira linha pode ser removida se o transporteId for exibido de outra forma */}
             <tr>
               <th></th>
               <th></th>
-              <RowHeader extraClass="w-[30%]">{transporteId}</RowHeader>
+              {/* Deixei o transporteId aqui, mas ele agora vai se alinhar com a coluna descrição */}
+              <RowHeader>{transporteId}</RowHeader>
               <th></th>
               <th></th>
               <th></th>
             </tr>
             <tr className='bg-gray-100 print:bg-gray-200'>
-              <RowHeader extraClass="w-[10%]">Endereço</RowHeader>
-              <RowHeader extraClass="w-[10%]">SKU</RowHeader>
-              <RowHeader extraClass="w-[30%]">Descrição</RowHeader>
-              <RowHeader extraClass="w-[10%]">Lote</RowHeader>
-              <RowHeader extraClass="w-[10%]">Fab</RowHeader>
-              {config?.dataMaximaPercentual != null && config.dataMaximaPercentual > 0 && <RowHeader extraClass="w-[10%]">Max</RowHeader>}
-              <RowHeader extraClass="w-[5%]">Caixas</RowHeader>
-              {!config?.separarUnidades && <RowHeader extraClass="w-[5%]">Unid.</RowHeader>}
-              {!config?.separarPaleteFull && <RowHeader extraClass="w-[5%]">Paletes</RowHeader>}
-              <RowHeader extraClass="w-[10%]">Faixa</RowHeader>
+              {/* Para colunas com conteúdo curto que NUNCA devem quebrar, usamos whitespace-nowrap.
+                Isso garante que "SKU", "Lote", datas e quantidades fiquem em uma única linha.
+              */}
+              <RowHeader extraClass="whitespace-nowrap">Endereço</RowHeader>
+              <RowHeader extraClass="whitespace-nowrap">SKU</RowHeader>
+              
+              {/* A coluna "Descrição" NÃO tem classe de largura ou nowrap.
+                Ela vai se expandir para usar o espaço disponível e quebrar a linha se necessário.
+                Adicionar uma largura mínima (min-w) é uma boa prática para evitar que ela fique muito espremida.
+              */}
+              <RowHeader extraClass="min-w-[200px]">Descrição</RowHeader>
+              
+              <RowHeader extraClass="whitespace-nowrap">Lote</RowHeader>
+              <RowHeader extraClass="whitespace-nowrap">Fab</RowHeader>
+              {config?.dataMaximaPercentual != null && config.dataMaximaPercentual > 0 && <RowHeader extraClass="whitespace-nowrap">Max</RowHeader>}
+              <RowHeader extraClass="whitespace-nowrap">Cxs</RowHeader>
+              {!config?.separarUnidades && <RowHeader extraClass="whitespace-nowrap">Und.</RowHeader>}
+              {!config?.separarPaleteFull && <RowHeader extraClass="whitespace-nowrap">Plts</RowHeader>}
+              <RowHeader extraClass="whitespace-nowrap">Faixa</RowHeader>
             </tr>
           </thead>
           <tbody>
@@ -72,7 +86,8 @@ function RowHeader({
 }) {
   return (
     <th
-      className={`border-gray-300 px-2 py-0.5 font-semibold text-gray-700 ${extraClass}`}
+      // Padding ajustado para dar um pouco mais de respiro
+      className={`border-gray-300 px-2 py-1 font-semibold text-left text-gray-700 ${extraClass}`}
     >
       {children}
     </th>

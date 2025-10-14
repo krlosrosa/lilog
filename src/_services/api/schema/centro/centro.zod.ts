@@ -54,7 +54,8 @@ export const editarCentroBody = zod.object({
  * @summary Define a configuração de impressão
  */
 export const definirConfiguracaoImpressaoParams = zod.object({
-  "centerId": zod.string()
+  "centerId": zod.string(),
+  "empresa": zod.string()
 })
 
 export const definirConfiguracaoImpressaoBody = zod.object({
@@ -73,7 +74,8 @@ export const definirConfiguracaoImpressaoBody = zod.object({
  * @summary Busca as configurações de impressão
  */
 export const buscarConfiguracoesImpressaoParams = zod.object({
-  "centerId": zod.string()
+  "centerId": zod.string(),
+  "empresa": zod.string()
 })
 
 export const buscarConfiguracoesImpressaoResponse = zod.object({

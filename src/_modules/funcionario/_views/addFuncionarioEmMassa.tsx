@@ -61,6 +61,7 @@ export function AddFuncionarioEmMassa() {
           id: item.id,
           name: item.name,
           turno: item.turno,
+          empresa: item.empresa
         })),
       },
     })

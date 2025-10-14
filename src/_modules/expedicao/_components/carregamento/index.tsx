@@ -1,14 +1,6 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from "react"
-import { useFileStore } from "../../_stores/useMapaImpressao"  
-import { ImpressaoMapa } from "../../services/types/pickingMap"
-import { gerarMapaSeparacao } from "../../services/gerarMapaSeparacao"
-import {
-  useAdicionarPaletesSeparacao,
-} from "@/_services/api/hooks/transporte/transporte"
-import { PaleteInputZodDto } from "@/_services/api/model"
-import { Button } from "@/_shared/components/ui/button"
-import { useAuthStore } from "@/_shared/stores/auth.store"
+import { useCallback, useRef, useState } from "react"
+import { useFileStore } from "../../_stores/useMapaImpressao"
 import {
   Card,
   CardContent,
@@ -16,28 +8,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/_shared/components/ui/card"
-import { Skeleton } from "@/_shared/components/ui/skeleton"
-import { ScrollArea } from "@/_shared/components/ui/scroll-area"
+import { gerarMapaCarregamento } from "../../services/gerarMapaCarregamento"
+import { Button } from "@/_shared/components/ui/button"
+import { ImpressaoMapa } from "../../services/types/pickingMap"
 import { useBuscarConfiguracoesImpressao } from "@/_services/api/hooks/centro/centro"
-import { toast } from "react-toastify"
-import ModalConfirmaInputPaleteMapa from "./modalConfirmaInputPaleteMapa"
-import { useConfigGroupsImpressao } from "../../_stores/useConfigGroupsImpressao"
-import { useReactToPrint } from "react-to-print"
-import { HeaderPicking } from "./picking/headerPicking"
-import { BodyPalete } from "./palete/bodyPalete"
-import { BodyUnidade } from "./unidade/bodyUnidade"
-import { BodyFifo } from "./fifo/bodyFifo"
-import { BodyPicking } from "./picking/bodyPicking"
+import { useAuthStore } from "@/_shared/stores/auth.store"
+import { BodyCarregamento } from "./bodyCarregamento"
+import { HeaderCarregamento } from "./headerCarregamento"
+import ModalConfirmaInputPaleteConferencia from "./modalConfirmaInputPaleteConferencia"
 import { useSession } from "next-auth/react"
-import ProtocoloExpedicao from "../protocolos/protocolo"
+import { useReactToPrint } from "react-to-print"
+import { PaleteInputZodDto } from "@/_services/api/model"
+import { useAdicionarPaletesSeparacao } from "@/_services/api/hooks/transporte/transporte"
+import { toast } from "react-toastify"
+import { ComboboxEmpresa } from "@/_modules/center/components/selecionarEmpresa"
+import { ScrollArea } from "@radix-ui/react-scroll-area"
+import { Skeleton } from "@/_shared/components/ui/skeleton"
 
-export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
-  const { centerId, user } = useAuthStore()
-  const { data: session } = useSession()
-  const { segregarClientes, agruparClientes, agruparTransportes, agruparRemessas } = useConfigGroupsImpressao()
+
+export function MapaDeCarregamento({
+  setTab,
+}: {
+  setTab: (tab: string) => void
+}) {
   const { products, routes, shipments } = useFileStore()
+  const { data: session } = useSession()
   const [mapas, setMapas] = useState<ImpressaoMapa[]>([])
   const [isGenerating, setIsGenerating] = useState(false)
+  const { centerId, user } = useAuthStore()
   const printRef = useRef<HTMLDivElement>(null)
 
   const handlePrint = useReactToPrint({
@@ -101,47 +99,6 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
       }
     },
   })
-  const {
-    data: config,
-    isLoading: isLoadingConfig,
-    isError,
-    } = useBuscarConfiguracoesImpressao(centerId as string, user?.empresa as string, {
-    query: {
-      queryKey: ["configuracoes-centro", centerId],
-      enabled: !!centerId && !!user,
-    },
-  })
-
-  
-  useEffect(() => {
-    if (isError) {
-      toast.error("Erro ao buscar configurações")
-    }
-  }, [isError])
-
-  const generateMap = useCallback(async () => {
-    if (!config) {
-      return
-    }
-    setIsGenerating(true)
-    try {
-      const result = await gerarMapaSeparacao(
-        {
-          products,
-          routes,
-          shipments,
-        },
-        config,
-        segregarClientes || [],
-        agruparClientes || [],
-        agruparTransportes || [],
-        agruparRemessas || [],
-      )
-      setMapas(result)
-    } finally {
-      setIsGenerating(false)
-    }
-  }, [config, products, routes, shipments])
 
   const handleAddPalete = useCallback(async () => {
     const headers = mapas.map(item => {
@@ -166,26 +123,27 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
     })
   }, [mapas, addPalete])
 
-  if (isLoadingConfig) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Mapas de Separação</CardTitle>
-          <CardDescription>
-            Aguarde, carregando configurações...
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Skeleton className="h-20 w-full" />
-        </CardContent>
-      </Card>
-    )
-  }
+  const {
+    data: config,
+    isLoading: isLoadingConfig,
+    isError,
+  } = useBuscarConfiguracoesImpressao(centerId as string, user?.empresa as string, {
+    query: {
+      queryKey: ["configuracoes-centro", centerId],
+      enabled: !!centerId && !!user,
+    },
+  })
 
-  if (isError) {
-    return <div>Erro ao buscar configurações</div>
-  }
-
+  const handleGenerateMinuta = useCallback(async () => {
+    setIsGenerating(true)
+    const result = await gerarMapaCarregamento({
+      products,
+      routes,
+      shipments,
+    })
+    setMapas(result)
+    setIsGenerating(false)
+  }, [products, routes, shipments])
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -199,18 +157,17 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
           <Button variant="ghost" onClick={() => setTab("configuracoes")}>
             Voltar para Configurações
           </Button>
-          <ProtocoloExpedicao tipo="SEPARACAO"/>
-          <Button onClick={generateMap} disabled={isGenerating}>
+          <Button onClick={handleGenerateMinuta} disabled={isGenerating}>
             {isGenerating ? "Gerando..." : "Gerar mapas"}
           </Button>
-          <ModalConfirmaInputPaleteMapa
+          <ModalConfirmaInputPaleteConferencia
             disabled={isAdding || mapas.length === 0}
             onSubmit={handlePrint}
           >
             <Button disabled={isAdding || mapas.length === 0}>
               {isAdding ? "Adicionando..." : "Imprimir"}
             </Button>
-          </ModalConfirmaInputPaleteMapa>
+          </ModalConfirmaInputPaleteConferencia>
         </div>
       </CardHeader>
       <CardContent>
@@ -225,17 +182,13 @@ export default function Mapa({ setTab }: { setTab: (tab: string) => void }) {
               mapas.map((mapa, index) => {
                 const tipo = config?.tipoImpressao as 'CLIENTE' | 'TRANSPORTE'
                 const transporteId = `${mapa.transportId}${tipo === 'CLIENTE' ? `[${mapa.codClientes[0]}]` : ''}`
-                const exibirCliente = config?.exibirInfoCabecalho as 'PRIMEIRO' | 'TODOS' | 'NENHUM'
                 return <div
                   key={mapa.paleteId}
                   className={`mb-4 p-1 rounded-lg ${index > 0 ? "print-page-break" : ""}`}
                   style={{ breakInside: "avoid", pageBreakInside: "avoid" }}
                 >
-                  <HeaderPicking mapa={mapa} tipo={tipo} exibirCliente={exibirCliente} />
-                  {mapa.tipo === 'picking' && <BodyPicking transporteId={transporteId} config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'palete' && <BodyPalete transporteId={transporteId} config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'unidade' && <BodyUnidade transporteId={transporteId} config={config} itens={mapa.itens} />}
-                  {mapa.tipo === 'fifo' && <BodyFifo transporteId={transporteId} config={config} itens={mapa.itens} />}
+                  <HeaderCarregamento mapa={mapa} />
+                  <BodyCarregamento transporteId={transporteId} config={config} itens={mapa.itens} />
                 </div>
               })
             ) : (

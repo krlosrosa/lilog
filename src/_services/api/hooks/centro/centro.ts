@@ -233,12 +233,13 @@ export const useEditarCentro = <TError = ErrorType<null>,
  */
 export const definirConfiguracaoImpressao = (
     centerId: string,
+    empresa: string,
     definirConfiguracaoImpressaoDto: BodyType<DefinirConfiguracaoImpressaoDto>,
  options?: SecondParameter<typeof axiosFetcher>,) => {
       
       
       return axiosFetcher<null>(
-      {url: `/api/centro/definir-configuracao-impressao/${centerId}`, method: 'PUT',
+      {url: `/api/centro/definir-configuracao-impressao/${centerId}/${empresa}`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: definirConfiguracaoImpressaoDto
     },
@@ -248,8 +249,8 @@ export const definirConfiguracaoImpressao = (
 
 
 export const getDefinirConfiguracaoImpressaoMutationOptions = <TError = ErrorType<null>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
-): UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;empresa: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+): UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;empresa: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext> => {
 
 const mutationKey = ['definirConfiguracaoImpressao'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -261,10 +262,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, {centerId: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}> = (props) => {
-          const {centerId,data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, {centerId: string;empresa: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}> = (props) => {
+          const {centerId,empresa,data} = props ?? {};
 
-          return  definirConfiguracaoImpressao(centerId,data,requestOptions)
+          return  definirConfiguracaoImpressao(centerId,empresa,data,requestOptions)
         }
 
         
@@ -280,11 +281,11 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
  * @summary Define a configuração de impressão
  */
 export const useDefinirConfiguracaoImpressao = <TError = ErrorType<null>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof definirConfiguracaoImpressao>>, TError,{centerId: string;empresa: string;data: BodyType<DefinirConfiguracaoImpressaoDto>}, TContext>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof definirConfiguracaoImpressao>>,
         TError,
-        {centerId: string;data: BodyType<DefinirConfiguracaoImpressaoDto>},
+        {centerId: string;empresa: string;data: BodyType<DefinirConfiguracaoImpressaoDto>},
         TContext
       > => {
 
@@ -297,38 +298,41 @@ export const useDefinirConfiguracaoImpressao = <TError = ErrorType<null>,
  */
 export const buscarConfiguracoesImpressao = (
     centerId: string,
+    empresa: string,
  options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
 ) => {
       
       
       return axiosFetcher<DefinirConfiguracaoImpressaoDto>(
-      {url: `/api/centro/buscar-configuracoes-impressao/${centerId}`, method: 'GET', signal
+      {url: `/api/centro/buscar-configuracoes-impressao/${centerId}/${empresa}`, method: 'GET', signal
     },
       options);
     }
   
 
-export const getBuscarConfiguracoesImpressaoQueryKey = (centerId?: string,) => {
-    return [`/api/centro/buscar-configuracoes-impressao/${centerId}`] as const;
+export const getBuscarConfiguracoesImpressaoQueryKey = (centerId?: string,
+    empresa?: string,) => {
+    return [`/api/centro/buscar-configuracoes-impressao/${centerId}/${empresa}`] as const;
     }
 
     
-export const getBuscarConfiguracoesImpressaoQueryOptions = <TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(centerId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+export const getBuscarConfiguracoesImpressaoQueryOptions = <TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(centerId: string,
+    empresa: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getBuscarConfiguracoesImpressaoQueryKey(centerId);
+  const queryKey =  queryOptions?.queryKey ?? getBuscarConfiguracoesImpressaoQueryKey(centerId,empresa);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>> = ({ signal }) => buscarConfiguracoesImpressao(centerId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>> = ({ signal }) => buscarConfiguracoesImpressao(centerId,empresa, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(centerId && empresa), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type BuscarConfiguracoesImpressaoQueryResult = NonNullable<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>>
@@ -336,7 +340,8 @@ export type BuscarConfiguracoesImpressaoQueryError = ErrorType<null>
 
 
 export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(
- centerId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>> & Pick<
+ centerId: string,
+    empresa: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>,
           TError,
@@ -346,7 +351,8 @@ export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeo
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(
- centerId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>> & Pick<
+ centerId: string,
+    empresa: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>,
           TError,
@@ -356,7 +362,8 @@ export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeo
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(
- centerId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ centerId: string,
+    empresa: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -364,11 +371,12 @@ export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeo
  */
 
 export function useBuscarConfiguracoesImpressao<TData = Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError = ErrorType<null>>(
- centerId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ centerId: string,
+    empresa: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarConfiguracoesImpressao>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getBuscarConfiguracoesImpressaoQueryOptions(centerId,options)
+  const queryOptions = getBuscarConfiguracoesImpressaoQueryOptions(centerId,empresa,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

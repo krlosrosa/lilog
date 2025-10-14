@@ -12,4 +12,5 @@ export interface CriarNovoFuncionarioZodDto {
   nome: string;
   turno: string;
   role: string;
+  empresa: string;
 }

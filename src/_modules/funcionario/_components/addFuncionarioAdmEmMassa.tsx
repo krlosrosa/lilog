@@ -80,7 +80,8 @@ export default function AddFuncionarioAdmEmMassa() {
         primeiroNome: item.primeiro_nome, 
         turno: item.turno, 
         ultimoNome: item.ultimo_nome, 
-        processo: value
+        processo: value,
+        empresa: item.empresa,
       }
     })
     addFuncionarioEmMassa({

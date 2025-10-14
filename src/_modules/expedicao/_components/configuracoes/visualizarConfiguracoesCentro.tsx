@@ -8,23 +8,35 @@ import {
 } from "@/_shared/components/ui/accordion"
 import { Skeleton } from "@/_shared/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/_shared/components/ui/alert"
+import { useEffect } from "react"
 
 export default function VisualizarConfiguracoesCentro() {
-  const { centerId } = useAuthStore()
+  const { centerId, user } = useAuthStore()
   const {
     data: config,
     isLoading,
     isError,
-  } = useBuscarConfiguracoesImpressao(centerId as string, {
+    refetch,
+    isFetching
+
+  } = useBuscarConfiguracoesImpressao(centerId as string, user?.empresa as string, {
     query: {
       queryKey: ["configuracoes-centro", centerId],
-      enabled: !!centerId,
+      enabled: !!centerId && !!user,
     }
   })
 
-  if (isLoading) {
+  useEffect(() => {
+    if (centerId && user) {
+      refetch()
+    }
+  }, [user?.empresa])
+  
+
+  if (isLoading || isFetching) {
     return (
       <div className="w-full space-y-2 rounded-lg border p-4">
+        <div>Carregando</div>
         <Skeleton className="h-6 w-3/4" />
       </div>
     )

@@ -17,7 +17,8 @@ export const minhaInfoResponse = zod.object({
   "listCenterRole": zod.array(zod.object({
   "centerId": zod.string(),
   "role": zod.enum(['USER', 'FUNCIONARIO', 'ADMIN']),
-  "processo": zod.string()
+  "processo": zod.string(),
+  "empresa": zod.string()
 }))
 })
 
@@ -32,7 +33,8 @@ export const criarFuncionarioAdmBody = zod.object({
   "ultimoNome": zod.string(),
   "credencial": zod.string(),
   "turno": zod.string(),
-  "processo": zod.string().optional()
+  "processo": zod.string().optional(),
+  "empresa": zod.string()
 })
 
 export const criarFuncionarioAdmResponse = zod.object({
@@ -40,7 +42,8 @@ export const criarFuncionarioAdmResponse = zod.object({
   "id": zod.string(),
   "nome": zod.string(),
   "turno": zod.string(),
-  "role": zod.string()
+  "role": zod.string(),
+  "empresa": zod.string()
 })
 
 /**
@@ -57,7 +60,8 @@ export const criarFuncionarioAdmEmMassaBodyItem = zod.object({
   "nome": zod.string(),
   "primeiroNome": zod.string(),
   "ultimoNome": zod.string(),
-  "turno": zod.string()
+  "turno": zod.string(),
+  "empresa": zod.string()
 })
 export const criarFuncionarioAdmEmMassaBody = zod.array(criarFuncionarioAdmEmMassaBodyItem)
 
@@ -69,7 +73,8 @@ export const criarNovoFuncionarioBody = zod.object({
   "id": zod.string(),
   "nome": zod.string(),
   "turno": zod.string(),
-  "role": zod.string()
+  "role": zod.string(),
+  "empresa": zod.string()
 })
 
 export const criarNovoFuncionarioResponse = zod.object({
@@ -77,7 +82,8 @@ export const criarNovoFuncionarioResponse = zod.object({
   "id": zod.string(),
   "nome": zod.string(),
   "turno": zod.string(),
-  "role": zod.string()
+  "role": zod.string(),
+  "empresa": zod.string()
 })
 
 /**
@@ -88,7 +94,8 @@ export const criarFuncionariosEmMassaBody = zod.object({
   "users": zod.array(zod.object({
   "id": zod.string(),
   "name": zod.string(),
-  "turno": zod.string()
+  "turno": zod.string(),
+  "empresa": zod.string()
 }))
 })
 
@@ -156,5 +163,12 @@ export const deletarUsuarioParams = zod.object({
 export const resetSenhaParams = zod.object({
   "userId": zod.string(),
   "password": zod.string()
+})
+
+/**
+ * @summary Logout
+ */
+export const logoutParams = zod.object({
+  "id": zod.string()
 })
 

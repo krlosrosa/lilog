@@ -22,16 +22,6 @@ export function alocarCaixasEPaletes(
     const pesoPaletes =
       paletesDeCaixas * cxPorPallet * unPorCaixa * pesoUnidade;
 
-      console.log(
-        {
-          produto: item.produto,
-          pesoUnidade,
-          pesoUnidades,
-          pesoCaixas,
-          pesoPaletes
-        }
-      )
-
     return {
       ...item,
       quantidade: unidadesRestantes,

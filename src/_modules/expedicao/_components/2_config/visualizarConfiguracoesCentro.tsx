@@ -10,15 +10,15 @@ import { Skeleton } from "@/_shared/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/_shared/components/ui/alert"
 
 export default function VisualizarConfiguracoesCentro() {
-  const { centerId } = useAuthStore()
+  const { centerId, user } = useAuthStore()
   const {
     data: config,
     isLoading,
     isError,
-  } = useBuscarConfiguracoesImpressao(centerId as string, {
+  } = useBuscarConfiguracoesImpressao(centerId as string, user?.empresa as string, {
     query: {
       queryKey: ["configuracoes-centro", centerId],
-      enabled: !!centerId,
+      enabled: !!centerId && !!user,
     },
   })
 

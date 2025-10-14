@@ -39,7 +39,8 @@ import { Controller, useFormContext } from "react-hook-form"
 import z from "zod"
 import { Header } from "@/_shared/components/ui/header"
 import { toast } from "react-toastify"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { ComboboxEmpresa } from "../components/selecionarEmpresa"
 
 type DefinirConfiguracaoImpressaoBody = z.infer<
   typeof definirConfiguracaoImpressaoBody
@@ -47,6 +48,7 @@ type DefinirConfiguracaoImpressaoBody = z.infer<
 
 export default function ConfiguracaoPage() {
   const { centerId } = useAuthStore()
+  const [empresa, setEmpresa] = useState("")
 
   const { mutate: definirConfiguracaoImpressao } =
     useDefinirConfiguracaoImpressao(
@@ -57,16 +59,19 @@ export default function ConfiguracaoPage() {
     )
 
   function onSubmit(data: DefinirConfiguracaoImpressaoBody) {
-    definirConfiguracaoImpressao({ centerId: centerId as string, data: data })
+    definirConfiguracaoImpressao({ centerId: centerId as string, empresa, data: data })
   }
 
   const {
     data: config,
     isLoading,
     isError,
-  } = useBuscarConfiguracoesImpressao(centerId as string, {
+  } = useBuscarConfiguracoesImpressao(centerId as string, empresa, {
     query: {
       enabled: !!centerId,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchInterval: false,  
     }
   })
 
@@ -114,7 +119,7 @@ export default function ConfiguracaoPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ConfiguracaoFormContent />
+                <ConfiguracaoFormContent empresa={empresa} setEmpresa={setEmpresa} />
               </CardContent>
               <CardFooter>
                 <Button type="submit">Salvar alterações</Button>
@@ -128,7 +133,12 @@ export default function ConfiguracaoPage() {
   )
 }
 
-function ConfiguracaoFormContent() {
+type PropsConfig = {
+  empresa: string,
+  setEmpresa: React.Dispatch<React.SetStateAction<string>>
+}
+
+function ConfiguracaoFormContent({empresa, setEmpresa}: PropsConfig) {
   const { control, watch } = useFormContext()
   const quebraPalete = watch("quebraPalete")
 
@@ -137,8 +147,14 @@ function ConfiguracaoFormContent() {
       type="single"
       collapsible
       className="w-full"
-      defaultValue="item-1"
+      defaultValue="empresa"
     >
+      <AccordionItem value="empresa">
+        <AccordionTrigger>Definir empresa</AccordionTrigger>
+        <AccordionContent>
+          <ComboboxEmpresa nomeEmpresa={empresa} setEmpresa={setEmpresa}/>
+        </AccordionContent>
+      </AccordionItem>
       <AccordionItem value="item-1">
         <AccordionTrigger>Tipo de Impressão</AccordionTrigger>
         <AccordionContent>

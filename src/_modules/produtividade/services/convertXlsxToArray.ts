@@ -12,6 +12,7 @@ export async function convertXlsxToArray(params: File): Promise<User[]> {
     id: String(item['id'] ?? '').trim(),
     name: String(item['nome'] ?? '').trim(),
     turno: String(item['turno'] ?? '').trim(),
+    empresa: String(item['empresa'] ?? '').trim(), 
   }));
 
   return Promise.resolve(convertedData);
@@ -33,6 +34,7 @@ export async function convertXlsxToArrayUserAdm(params: File): Promise<UserAdm[]
     senha_inicial: String(item['senha_inicial'] ?? '').trim(),
     permissao: String(item['permissao'] ?? '').trim(),
     turno: String(item['turno'] ?? '').trim(),  
+    empresa: String(item['empresa'] ?? '').trim(), 
   }));
 
   return Promise.resolve(convertedData);
@@ -42,6 +44,7 @@ export type User = {
   id: string;
   name: string;
   turno: string;
+  empresa: string;
 };
 
 export type UserAdm = {
@@ -52,5 +55,6 @@ export type UserAdm = {
   senha_inicial: string;
   permissao: string;
   turno: string;
+  empresa: string
 };
 
