@@ -13,7 +13,7 @@ export default function ModaConfirmacaoAddTransporte({ children, onSubmit }: Mod
   const [open, setOpen] = useState(false)
   const [dataExpedicao, setDataExpedicao] = useState(() => {
     const hoje = new Date()
-    return hoje.toISOString().split('T')[0] // Formato YYYY-MM-DD
+    return hoje.toISOString()
   })
 
   const handleSubmit = () => {

@@ -59,8 +59,6 @@ export default function PaletesPendentesPage() {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     });
   };
 
@@ -182,7 +180,7 @@ export default function PaletesPendentesPage() {
                     <TableHead>Segmento</TableHead>
                     <TableHead>Tipo Processo</TableHead>
                     <TableHead>Validado</TableHead>
-                    <TableHead>Criado Em</TableHead>
+                    <TableHead>Data Expedição</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -206,7 +204,7 @@ export default function PaletesPendentesPage() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground">
-                        {formatDate(palete.criadoEm)}
+                        {palete.dataExpedicao}
                       </TableCell>
                     </TableRow>
                   ))}

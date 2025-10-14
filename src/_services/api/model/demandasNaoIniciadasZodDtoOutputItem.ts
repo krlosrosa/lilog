@@ -23,4 +23,5 @@ export type DemandasNaoIniciadasZodDtoOutputItem = {
   demandaId: number | null;
   validado: boolean;
   criadoPorId: string;
+  dataExpedicao: string;
 };

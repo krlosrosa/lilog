@@ -127,7 +127,8 @@ export const listarPaletesEmAbertoResponseItem = zod.object({
   "atualizadoEm": zod.string(),
   "demandaId": zod.number().nullable(),
   "validado": zod.boolean(),
-  "criadoPorId": zod.string()
+  "criadoPorId": zod.string(),
+  "dataExpedicao": zod.string()
 })
 export const listarPaletesEmAbertoResponse = zod.array(listarPaletesEmAbertoResponseItem)
 
