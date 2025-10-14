@@ -14,6 +14,7 @@ import { FilesState } from "../_components/0_upload/uploadFiles";
 import { alocarCaixaEUnidade } from "./pipeline/2-AlocarCaixaEUnidade";
 import { gerarMapaCarregamentoUm } from "./pipeline/11-gerarMapaCarregamento";
 import { agruparESomarCarregamento } from "./pipeline/5-agruparESomarCarregamento";
+import { alocarCaixasCarregamento } from "./pipeline/6-alocarCaixasEPaletesCarregamento";
 
 
 export async function gerarMapaCarregamento(
@@ -42,14 +43,20 @@ export async function gerarMapaCarregamento(
     routingPlans,
   );
   const transformQuantities =
-    alocarCaixaEUnidade(enrichedShipments);
+    transformarQuantidadeEmUnidade(enrichedShipments);
 
   const enrichedShipmentsWithGrupos = gerarGrupos(
     transformQuantities,
     'TRANSPORTE',
   );
-  const enrichedShipmentsWithGruposESomar = agruparESomarCarregamento(
+
+  const converterParaCaixa = alocarCaixasCarregamento(
     enrichedShipmentsWithGrupos,
+  );
+
+
+  const enrichedShipmentsWithGruposESomar = agruparESomarCarregamento(
+    converterParaCaixa,
   );
 
   const definirFaixa = definirFaixaERange(enrichedShipmentsWithGruposESomar,0)
