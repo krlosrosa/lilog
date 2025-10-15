@@ -132,3 +132,70 @@ export const anomaliasPorCentroResponseItem = zod.object({
 })
 export const anomaliasPorCentroResponse = zod.array(anomaliasPorCentroResponseItem)
 
+/**
+ * @summary OverViewPorDia
+ */
+export const overViewDiaParams = zod.object({
+  "centerId": zod.string(),
+  "data": zod.string(),
+  "processo": zod.string()
+})
+
+export const overViewDiaResponse = zod.object({
+  "overView": zod.object({
+  "totalDemandas": zod.number(),
+  "totalEmAndamento": zod.number(),
+  "totalEmpausa": zod.number(),
+  "totalFinalizado": zod.number(),
+  "totalCaixas": zod.number(),
+  "totalUnidades": zod.number(),
+  "mediaEnderecosVisitados": zod.number()
+}),
+  "topCinco": zod.array(zod.object({
+  "id": zod.string(),
+  "nome": zod.string(),
+  "turno": zod.string(),
+  "caixas": zod.number(),
+  "paletes": zod.number(),
+  "unidades": zod.number(),
+  "visitar": zod.number(),
+  "produtividade": zod.number()
+})),
+  "pioresCinco": zod.array(zod.object({
+  "id": zod.string(),
+  "nome": zod.string(),
+  "turno": zod.string(),
+  "caixas": zod.number(),
+  "paletes": zod.number(),
+  "unidades": zod.number(),
+  "visitar": zod.number(),
+  "produtividade": zod.number()
+})),
+  "anomaliaPausa": zod.array(zod.object({
+  "id": zod.string(),
+  "nome": zod.string(),
+  "turno": zod.string(),
+  "motivoPausa": zod.string(),
+  "tempoDePausa": zod.number()
+})),
+  "anomaliaDemanda": zod.array(zod.object({
+  "id": zod.string(),
+  "nome": zod.string(),
+  "turno": zod.string(),
+  "tempoDemanda": zod.number(),
+  "visitas": zod.number(),
+  "produtividade": zod.number(),
+  "caixas": zod.number(),
+  "unidade": zod.number(),
+  "paletes": zod.number()
+})),
+  "horaAHora": zod.array(zod.object({
+  "data": zod.string(),
+  "caixas": zod.number(),
+  "unidades": zod.number(),
+  "paletes": zod.number(),
+  "visitas": zod.number(),
+  "produtividade": zod.number()
+}))
+})
+

@@ -23,6 +23,7 @@ import type {
 import type {
   AnomaliaPorCentroZodDto,
   AnomaliasPorCentroParams,
+  DashBoardDiaPorCentrodtoZodDtoOutput,
   DashCentroIndividualParams,
   DashCentrosParams,
   DashCentrosZodDto,
@@ -305,6 +306,107 @@ export function useAnomaliasPorCentro<TData = Awaited<ReturnType<typeof anomalia
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getAnomaliasPorCentroQueryOptions(centerId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary OverViewPorDia
+ */
+export const overViewDia = (
+    centerId: string,
+    data: string,
+    processo: string,
+ options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
+) => {
+      
+      
+      return axiosFetcher<DashBoardDiaPorCentrodtoZodDtoOutput>(
+      {url: `/dashboard/overview-por-centro/${centerId}/${data}/${processo}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getOverViewDiaQueryKey = (centerId?: string,
+    data?: string,
+    processo?: string,) => {
+    return [`/dashboard/overview-por-centro/${centerId}/${data}/${processo}`] as const;
+    }
+
+    
+export const getOverViewDiaQueryOptions = <TData = Awaited<ReturnType<typeof overViewDia>>, TError = ErrorType<null>>(centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getOverViewDiaQueryKey(centerId,data,processo);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof overViewDia>>> = ({ signal }) => overViewDia(centerId,data,processo, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(centerId && data && processo), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type OverViewDiaQueryResult = NonNullable<Awaited<ReturnType<typeof overViewDia>>>
+export type OverViewDiaQueryError = ErrorType<null>
+
+
+export function useOverViewDia<TData = Awaited<ReturnType<typeof overViewDia>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof overViewDia>>,
+          TError,
+          Awaited<ReturnType<typeof overViewDia>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useOverViewDia<TData = Awaited<ReturnType<typeof overViewDia>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof overViewDia>>,
+          TError,
+          Awaited<ReturnType<typeof overViewDia>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useOverViewDia<TData = Awaited<ReturnType<typeof overViewDia>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary OverViewPorDia
+ */
+
+export function useOverViewDia<TData = Awaited<ReturnType<typeof overViewDia>>, TError = ErrorType<null>>(
+ centerId: string,
+    data: string,
+    processo: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof overViewDia>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getOverViewDiaQueryOptions(centerId,data,processo,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
