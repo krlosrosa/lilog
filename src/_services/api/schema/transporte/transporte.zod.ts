@@ -84,13 +84,31 @@ export const transporteControllerBuscarItensPorTransporteResponse = zod.array(tr
 /**
  * @summary Busca os transportes por data
  */
-export const transporteControllerBuscarTransportePorDataParams = zod.object({
+export const buscarTransportesPorCentroParams = zod.object({
   "centerId": zod.string()
 })
 
-export const transporteControllerBuscarTransportePorDataQueryParams = zod.object({
+export const buscarTransportesPorCentroQueryParams = zod.object({
   "data": zod.string()
 })
+
+export const buscarTransportesPorCentroResponseItem = zod.object({
+  "numeroTransporte": zod.string(),
+  "status": zod.enum(['AGUARDANDO_SEPARACAO', 'EM_SEPARACAO', 'SEPARACAO_CONCLUIDA', 'EM_CONFERENCIA', 'CONFERENCIA_CONCLUIDA', 'EM_CARREGAMENTO', 'CARREGAMENTO_CONCLUIDO', 'FATURADO', 'LIBERADO_PORTARIA', 'CANCELADO']),
+  "nomeRota": zod.string(),
+  "nomeTransportadora": zod.string(),
+  "placa": zod.string(),
+  "temCortes": zod.boolean().optional(),
+  "cadastradoPorId": zod.string().optional(),
+  "prioridade": zod.number().optional(),
+  "obs": zod.string().optional(),
+  "qtdImpressaoSeparacao": zod.number().optional(),
+  "qtdImpressaoCarregamento": zod.number().optional(),
+  "separacao": zod.enum(['NAO_INICIADO', 'EM_PROGRESSO', 'CONCLUIDO', 'EM_PAUSA']),
+  "conferencia": zod.enum(['NAO_INICIADO', 'EM_PROGRESSO', 'CONCLUIDO', 'EM_PAUSA']),
+  "carregamento": zod.enum(['NAO_INICIADO', 'EM_PROGRESSO', 'CONCLUIDO', 'EM_PAUSA'])
+})
+export const buscarTransportesPorCentroResponse = zod.array(buscarTransportesPorCentroResponseItem)
 
 /**
  * @summary Lista os transportes com demanda iniciada

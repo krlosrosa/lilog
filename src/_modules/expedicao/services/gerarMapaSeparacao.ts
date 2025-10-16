@@ -64,9 +64,11 @@ export async function gerarMapaSeparacao(
     enrichedShipmentsWithGrupos,
   );
 
+  
   const enrichedShipmentsWithCaixasEPaletes = alocarCaixasEPaletes(
     enrichedShipmentsWithGruposESomar,
   );
+  // console.log(enrichedShipmentsWithCaixasEPaletes.filter(item => item.transportId === '52982893' && item.codItem === "610001417" ))
 
   const enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete = splitPalete({ items: enrichedShipmentsWithCaixasEPaletes, splitPalete: config.separarPaleteFull, splitUnidade: config.separarUnidades });
   const enrichedShipmentsWithFifo = separarItensFifo(enrichedShipmentsWithCaixasEPaletesClassificadoSplitPalete, config.segregarFifo);

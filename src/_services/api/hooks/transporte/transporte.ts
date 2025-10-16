@@ -26,11 +26,12 @@ import type {
 
 import type {
   AdicionarTransporteParams,
+  BuscarTransportesPorCentroParams,
   ItensDoTransporteZodDtoOutput,
   Object,
   PaleteInputZodDto,
   TransportInfoZodDto,
-  TransporteControllerBuscarTransportePorDataParams
+  TransporteResponseZodDtoOutput
 } from '../../model';
 
 import { axiosFetcher } from '../../../http/axios.http';
@@ -454,14 +455,14 @@ export function useTransporteControllerBuscarItensPorTransporte<TData = Awaited<
 /**
  * @summary Busca os transportes por data
  */
-export const transporteControllerBuscarTransportePorData = (
+export const buscarTransportesPorCentro = (
     centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams,
+    params: BuscarTransportesPorCentroParams,
  options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
 ) => {
       
       
-      return axiosFetcher<null>(
+      return axiosFetcher<TransporteResponseZodDtoOutput[]>(
       {url: `/api/transporte/buscar-transporte-por-data/${centerId}`, method: 'GET',
         params, signal
     },
@@ -469,73 +470,73 @@ export const transporteControllerBuscarTransportePorData = (
     }
   
 
-export const getTransporteControllerBuscarTransportePorDataQueryKey = (centerId?: string,
-    params?: TransporteControllerBuscarTransportePorDataParams,) => {
+export const getBuscarTransportesPorCentroQueryKey = (centerId?: string,
+    params?: BuscarTransportesPorCentroParams,) => {
     return [`/api/transporte/buscar-transporte-por-data/${centerId}`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getTransporteControllerBuscarTransportePorDataQueryOptions = <TData = Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError = ErrorType<null>>(centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+export const getBuscarTransportesPorCentroQueryOptions = <TData = Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError = ErrorType<null>>(centerId: string,
+    params: BuscarTransportesPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getTransporteControllerBuscarTransportePorDataQueryKey(centerId,params);
+  const queryKey =  queryOptions?.queryKey ?? getBuscarTransportesPorCentroQueryKey(centerId,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>> = ({ signal }) => transporteControllerBuscarTransportePorData(centerId,params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof buscarTransportesPorCentro>>> = ({ signal }) => buscarTransportesPorCentro(centerId,params, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type TransporteControllerBuscarTransportePorDataQueryResult = NonNullable<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>>
-export type TransporteControllerBuscarTransportePorDataQueryError = ErrorType<null>
+export type BuscarTransportesPorCentroQueryResult = NonNullable<Awaited<ReturnType<typeof buscarTransportesPorCentro>>>
+export type BuscarTransportesPorCentroQueryError = ErrorType<null>
 
 
-export function useTransporteControllerBuscarTransportePorData<TData = Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError = ErrorType<null>>(
+export function useBuscarTransportesPorCentro<TData = Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError = ErrorType<null>>(
  centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData>> & Pick<
+    params: BuscarTransportesPorCentroParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>,
+          Awaited<ReturnType<typeof buscarTransportesPorCentro>>,
           TError,
-          Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>
+          Awaited<ReturnType<typeof buscarTransportesPorCentro>>
         > , 'initialData'
       >, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTransporteControllerBuscarTransportePorData<TData = Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError = ErrorType<null>>(
+export function useBuscarTransportesPorCentro<TData = Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError = ErrorType<null>>(
  centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData>> & Pick<
+    params: BuscarTransportesPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>,
+          Awaited<ReturnType<typeof buscarTransportesPorCentro>>,
           TError,
-          Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>
+          Awaited<ReturnType<typeof buscarTransportesPorCentro>>
         > , 'initialData'
       >, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTransporteControllerBuscarTransportePorData<TData = Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError = ErrorType<null>>(
+export function useBuscarTransportesPorCentro<TData = Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError = ErrorType<null>>(
  centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+    params: BuscarTransportesPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Busca os transportes por data
  */
 
-export function useTransporteControllerBuscarTransportePorData<TData = Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError = ErrorType<null>>(
+export function useBuscarTransportesPorCentro<TData = Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError = ErrorType<null>>(
  centerId: string,
-    params: TransporteControllerBuscarTransportePorDataParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof transporteControllerBuscarTransportePorData>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
+    params: BuscarTransportesPorCentroParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof buscarTransportesPorCentro>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getTransporteControllerBuscarTransportePorDataQueryOptions(centerId,params,options)
+  const queryOptions = getBuscarTransportesPorCentroQueryOptions(centerId,params,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -4,7 +4,7 @@ export function transformarQuantidadeEmUnidade(
   enrichedShipments: EnrichedPickingMapItem[],
 ): EnrichedPickingMapItem[] {
   return enrichedShipments.map((item) => {
-    const uuMedidas = ['CX', 'SC', 'FRD'];
+    const uuMedidas = ['CX', 'SC', 'FRD', 'FD'];
     let quantidadeUnidades = 0;
     let pesoLiquido = 0;
     if (uuMedidas.includes(item.unMedida)) {
