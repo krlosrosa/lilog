@@ -7,7 +7,7 @@ export default defineConfig({
     input: {
       target: 'http://localhost:4000/docs-json',
       filters: {
-        tags: ['Transporte']
+        tags: ['Dashboard']
       }
     },
     output: {
@@ -31,7 +31,7 @@ export default defineConfig({
     input: {
       target: 'http://localhost:4000/docs-json',
       filters: {
-        tags: ['Transporte']
+        tags: ['Dashboard']
       }
     },
     output: {

@@ -54,7 +54,8 @@ export const dashCentrosResponse = zod.object({
  * @summary Dashboard por centros
  */
 export const dashCentroIndividualParams = zod.object({
-  "centerId": zod.string()
+  "centerId": zod.string(),
+  "processo": zod.string()
 })
 
 export const dashCentroIndividualQueryParams = zod.object({

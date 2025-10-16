@@ -131,13 +131,14 @@ export function useDashCentros<TData = Awaited<ReturnType<typeof dashCentros>>, 
  */
 export const dashCentroIndividual = (
     centerId: string,
+    processo: string,
     params: DashCentroIndividualParams,
  options?: SecondParameter<typeof axiosFetcher>,signal?: AbortSignal
 ) => {
       
       
       return axiosFetcher<DashUmCentrosZodDto>(
-      {url: `/dashboard/dash/${centerId}`, method: 'GET',
+      {url: `/dashboard/dash/${centerId}/${processo}`, method: 'GET',
         params, signal
     },
       options);
@@ -145,28 +146,30 @@ export const dashCentroIndividual = (
   
 
 export const getDashCentroIndividualQueryKey = (centerId?: string,
+    processo?: string,
     params?: DashCentroIndividualParams,) => {
-    return [`/dashboard/dash/${centerId}`, ...(params ? [params]: [])] as const;
+    return [`/dashboard/dash/${centerId}/${processo}`, ...(params ? [params]: [])] as const;
     }
 
     
 export const getDashCentroIndividualQueryOptions = <TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(centerId: string,
+    processo: string,
     params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getDashCentroIndividualQueryKey(centerId,params);
+  const queryKey =  queryOptions?.queryKey ?? getDashCentroIndividualQueryKey(centerId,processo,params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof dashCentroIndividual>>> = ({ signal }) => dashCentroIndividual(centerId,params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dashCentroIndividual>>> = ({ signal }) => dashCentroIndividual(centerId,processo,params, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(centerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(centerId && processo), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type DashCentroIndividualQueryResult = NonNullable<Awaited<ReturnType<typeof dashCentroIndividual>>>
@@ -175,6 +178,7 @@ export type DashCentroIndividualQueryError = ErrorType<null>
 
 export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
  centerId: string,
+    processo: string,
     params: DashCentroIndividualParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof dashCentroIndividual>>,
@@ -186,6 +190,7 @@ export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCe
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
  centerId: string,
+    processo: string,
     params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof dashCentroIndividual>>,
@@ -197,6 +202,7 @@ export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCe
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
  centerId: string,
+    processo: string,
     params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -206,11 +212,12 @@ export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCe
 
 export function useDashCentroIndividual<TData = Awaited<ReturnType<typeof dashCentroIndividual>>, TError = ErrorType<null>>(
  centerId: string,
+    processo: string,
     params: DashCentroIndividualParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof dashCentroIndividual>>, TError, TData>>, request?: SecondParameter<typeof axiosFetcher>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getDashCentroIndividualQueryOptions(centerId,params,options)
+  const queryOptions = getDashCentroIndividualQueryOptions(centerId,processo,params,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

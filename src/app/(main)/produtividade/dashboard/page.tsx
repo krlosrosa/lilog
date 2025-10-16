@@ -36,17 +36,27 @@ import { format, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { 
   Boxes, Calendar as CalendarIcon, Clock, TrendingUp, Award, 
-  Loader2, AlertCircle, Users, Building2, Sun
+  Loader2, AlertCircle, Users, Building2, Sun,
+  ChevronsUpDown,
+  Check
 } from "lucide-react";
 import { useDashCentroIndividual, useDashCentros } from "@/_services/api/hooks/dashboard/dashboard";
 import { useAuthStore } from "@/_shared/stores/auth.store";
 import { normalizarNome } from "@/_shared/utils/formatNome";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/_shared/components/ui/command";
+import { cn } from "@/_shared/lib/utils";
 
 // ============================================
 // COLOR CONSTANTS
 // ============================================
 
 const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))"];
+
+const tiposProcesso = [
+  { value: 'SEPARACAO', label: 'Separação' },
+  { value: 'CARREGAMENTO', label: 'Carregamento' },
+  { value: 'CONFERENCIA', label: 'Conferência' },
+]
 
 // ============================================
 // REUSABLE COMPONENTS
@@ -304,13 +314,15 @@ export default function DashboardPage() {
     from: subDays(new Date(), 29), 
     to: new Date() 
   });
+  const [tipoProcesso, setTipoProcesso] = useState("SEPARACAO")
+  const [open, setOpen] = useState(false)
   const {centerId} = useAuthStore()
 
   const dataInicio = date?.from ? format(date.from, "yyyy-MM-dd") : format(subDays(new Date(), 29), "yyyy-MM-dd");
   const dataFim = date?.to ? format(date.to, "yyyy-MM-dd") : format(new Date(), "yyyy-MM-dd");
 
   // Ajuste o hook para incluir centerID se necessário
-  const { data, isLoading, error } = useDashCentroIndividual(centerId,{ 
+  const { data, isLoading, error } = useDashCentroIndividual(centerId,tipoProcesso,{ 
     dataInicio, 
     dataFim,
   });
@@ -372,6 +384,47 @@ export default function DashboardPage() {
               />
             </PopoverContent>
           </Popover>
+          <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-[200px] justify-between"
+                  >
+                    {tipoProcesso
+                      ? tiposProcesso.find((tipo) => tipo.value === tipoProcesso)?.label
+                      : 'Tipo de Processo'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    <CommandInput placeholder="Buscar tipo..." />
+                    <CommandEmpty>Nenhum tipo encontrado.</CommandEmpty>
+                    <CommandGroup>
+                      {tiposProcesso.map((tipo) => (
+                        <CommandItem
+                          key={tipo.value}
+                          value={tipo.value}
+                          onSelect={(currentValue) => {
+                            setTipoProcesso(currentValue === tipoProcesso ? '' : currentValue)
+                            setOpen(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              tipoProcesso === tipo.value ? 'opacity-100' : 'opacity-0'
+                            )}
+                          />
+                          {tipo.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
         </CardContent>
       </Card>
 
