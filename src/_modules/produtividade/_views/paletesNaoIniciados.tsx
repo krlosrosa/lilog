@@ -23,13 +23,14 @@ import {
   CommandInput,
   CommandItem,
 } from '@/_shared/components/ui/command';
-import { Loader2, Calendar as CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
+import { Loader2, Calendar as CalendarIcon, Check, ChevronsUpDown, FileSpreadsheet } from 'lucide-react';
 import { useListarPaletesEmAberto } from '@/_services/api/hooks/produtividade/produtividade';
 import { useAuthStore } from '@/_shared/stores/auth.store';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { cn } from '@/_shared/lib/utils';
+import { gerarExcel } from '@/_shared/utils/gerarExcel';
 
 const tiposProcesso = [
   { value: 'SEPARACAO', label: 'Separação' },
@@ -53,6 +54,12 @@ export default function PaletesPendentesPage() {
       }
     }
   )
+
+  function handleExcel() {
+    if(paletes && date){
+      gerarExcel(paletes, `anomalia-paletes${format(date, 'yyyy-MM-dd')}`)
+    }
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -158,6 +165,9 @@ export default function PaletesPendentesPage() {
                   />
                 </PopoverContent>
               </Popover>
+              <Button onClick={handleExcel} size='icon'>
+                <FileSpreadsheet />
+            </Button>
             </div>
           </div>
         </CardHeader>

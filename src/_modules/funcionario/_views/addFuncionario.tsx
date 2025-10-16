@@ -18,6 +18,13 @@ const turnos: SelectOption[] = [
   { value: 'NOITE', label: 'Noite' },
 ]
 
+const empresa: SelectOption[] = [
+  { value: 'LDB', label: 'Lactalis' },
+  { value: 'ITB', label: 'Itambé' },
+  { value: 'DPA', label: 'DPA' },
+]
+
+
 type AddFuncionarioBody = z.infer<typeof criarNovoFuncionarioBody>;
 
 export function AddFuncionario({ children }: { children: React.ReactNode }) {
@@ -48,7 +55,10 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
 
   const onSubmit = (data: AddFuncionarioBody) => {
     addFuncionario({
-      data: data,
+      data: {
+        ...data,
+        centerId
+      },
     })
   }
   return (
@@ -70,16 +80,22 @@ export function AddFuncionario({ children }: { children: React.ReactNode }) {
                 <FormInput name="id" label="ID" type="string" />
                 <FormInput name="nome" label="Nome" type="string" />
                 <FormSelectInput
-                className="w-full"
-                name="turno"
-                label="Turno"
-                options={turnos}
-              />
+                  className="w-full"
+                  name="turno"
+                  label="Turno"
+                  options={turnos}
+                />
+                <FormSelectInput
+                  className="w-full"
+                  name="empresa"
+                  label="Empresa"
+                  options={empresa}
+                />
               </div>
               <div className="flex flex-col justify-end gap-2 mt-4">
 
-              <Button className="w-full" type="submit" disabled={isPending}>{isPending ? 'Adicionando...' : 'Adicionar Funcionário'}</Button>
-              <Button className="w-full" variant="outline" disabled={isPending}>Cancel</Button>
+                <Button className="w-full" type="submit" disabled={isPending}>{isPending ? 'Adicionando...' : 'Adicionar Funcionário'}</Button>
+                <Button className="w-full" variant="outline" disabled={isPending}>Cancel</Button>
               </div>
             </form>
           </FormProvider>

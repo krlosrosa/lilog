@@ -102,7 +102,7 @@ export default function ProdutividadePage() {
       <div className="flex justify-between items-center">
         <Can I="read" a="PRODUTIVIDADE">
           <HeaderProdutividade />
-          <StartProdutividade />
+          <StartProdutividade processo={processo || ''}/>
           <div className="flex gap-2">
 
             <FinalizarProdutividade />

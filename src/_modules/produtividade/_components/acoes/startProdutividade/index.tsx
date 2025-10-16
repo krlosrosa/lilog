@@ -13,7 +13,11 @@ import { callBackReactQuery } from "@/_shared/utils/callBackReactQuery";
 import { useAuthStore } from "@/_shared/stores/auth.store";
 type Funcionario = ListarFuncionariosPorCentroZodDtoOutput[number]
 
-export function StartProdutividade() {
+type Props = {
+  processo: string
+}
+
+export function StartProdutividade({processo}:Props) {
   const { centerId } = useAuthStore();
   const { paletes, add, remove, clear } = usePaletes();
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState<Funcionario | null>(null);
@@ -41,7 +45,7 @@ export function StartProdutividade() {
       data: {
         centerId,
         inicio: new Date().toISOString(),
-        processo: 'picking',
+        processo: processo,
         funcionarioId: funcionarioSelecionado?.id ?? '',
         paletesIds: paletes.map(palete => palete),
         turno: funcionarioSelecionado?.turno ?? '',

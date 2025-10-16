@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { Calendar, Search, AlertCircle } from 'lucide-react';
+import { Calendar, Search, AlertCircle, FileSpreadsheet } from 'lucide-react';
 import { Input } from '@/_shared/components/ui/input';
 import { Label } from '@/_shared/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/_shared/components/ui/card';
@@ -8,6 +8,8 @@ import { Badge } from '@/_shared/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/_shared/components/ui/alert';
 import { useAnomaliasPorCentro } from '@/_services/api/hooks/dashboard/dashboard';
 import { useAuthStore } from '@/_shared/stores/auth.store';
+import { Button } from '@/_shared/components/ui/button';
+import { gerarExcel } from '@/_shared/utils/gerarExcel';
 
 interface Anomalia {
   id: number;
@@ -33,17 +35,17 @@ export default function AnomaliaList() {
   const [dataFinal, setDataFinal] = useState('');
   const [filtroNome, setFiltroNome] = useState('');
 
-  const { 
-    data: anomalias, 
-    isLoading: loading, 
+  const {
+    data: anomalias,
+    isLoading: loading,
     isError,
-    error 
+    error
   } = useAnomaliasPorCentro(
     centerId,
     {
       dataInicio: dataInicial,
       dataFim: dataFinal
-    }, 
+    },
     {
       query: {
         enabled: Boolean(centerId && dataInicial && dataFinal)
@@ -85,7 +87,7 @@ export default function AnomaliaList() {
     const nomeFuncionario = a.nomeFuncionario?.toLowerCase() || '';
     const motivoAnomalia = a.motivoAnomalia?.toLowerCase() || '';
     const filtro = filtroNome.toLowerCase();
-    
+
     return nomeFuncionario.includes(filtro) || motivoAnomalia.includes(filtro);
   });
 
@@ -109,6 +111,10 @@ export default function AnomaliaList() {
     if (produtividade >= 50) return 'secondary';
     return 'destructive';
   };
+
+  function handleExcel() {
+    gerarExcel(anomaliasFiltradas, 'anomalias')
+  }
 
   return (
     <div className="container mx-auto p-6 space-y-6">
@@ -166,6 +172,9 @@ export default function AnomaliaList() {
                 disabled={!anomalias || anomalias.length === 0}
               />
             </div>
+            <Button onClick={handleExcel} size='icon'>
+              <FileSpreadsheet />
+            </Button>
           </div>
         </CardContent>
       </Card>

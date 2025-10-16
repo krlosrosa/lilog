@@ -73,6 +73,8 @@ export * from './finalizarProdutividadeDto';
 export * from './getInfoDemandaResponseZodDto';
 export * from './itensDoTransporteZodDtoOutput';
 export * from './itensDoTransporteZodDtoOutputItem';
+export * from './listRolesEngineOutput';
+export * from './listRolesEngineOutputItem';
 export * from './listaDemandasZodDto';
 export * from './listaDemandasZodDtoItem';
 export * from './listaDemandasZodDtoItemStatus';
