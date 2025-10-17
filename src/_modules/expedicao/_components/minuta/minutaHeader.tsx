@@ -38,12 +38,9 @@ export const Header = ({ mapa }: HeaderProps) => {
   return (
     <div className="mb-3 w-full border border-slate-300 bg-white">
       {/* Cabeçalho Principal */}
-      <div className="flex text-xl items-center justify-between bg-gray-800 px-3 py-1.5 text-white print:bg-black">
+      <div className="flex text-xl items-center justify-center bg-gray-800 px-3 py-1.5 text-white print:bg-black">
         <h1 className="font-bold tracking-wide">
-          MINUTA DE CARREGAMENTO - {mapa.transportId} | {mapa.segmento}
-        </h1>
-        <h1 className="font-bold tracking-wide">
-          {getTypeLabel(mapa.tipo)}
+          MINUTA DE CARREGAMENTO - {mapa.transportId}
         </h1>
       </div>
 
@@ -56,13 +53,31 @@ export const Header = ({ mapa }: HeaderProps) => {
             <div className="grid grid-cols-4 gap-x-2">
               <InfoItem label="PLACA" value={mapa.placa} />
               <InfoItem label="TRANSPORTADORA" value={mapa.transportadora} className="col-span-2" />
-              <InfoItem label="SEQ" value={mapa.sequencia} />
-            </div>
-            {/* Linha 2 */}
-            <div className="grid grid-cols-4 gap-x-4">
-              <InfoItem label="TRANSPORTE" value={mapa.transportId} />
-              <InfoItem label="EMPRESA" value={mapa.empresa} />
               <InfoItem label="ROTA" value={mapa.rota} />
+            </div>
+            <div>
+              {(mapa.nomeClientes.length > 0 || mapa.infoAdicionaisI) && (
+                <div className="mt-2 space-y-1 border-t pt-2 text-[11px]">
+                  {mapa.nomeClientes.length > 0 && (
+                    <div>
+                      <span className="font-semibold text-muted-foreground">
+                        CLIENTES:
+                      </span>
+                      <span className="ml-2 text-[9px]">
+                        {mapa.nomeClientes.join(" | ")}
+                      </span>
+                    </div>
+                  )}
+                  {mapa.infoAdicionaisI && (
+                    <div>
+                      <span className="font-semibold text-muted-foreground">
+                        INFO:
+                      </span>
+                      <span className="ml-2">{mapa.infoAdicionaisI}</span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div>
               <p className="mt-1 text-[10px] tracking-wider">
@@ -76,30 +91,6 @@ export const Header = ({ mapa }: HeaderProps) => {
             <QRCodeSVG value={mapa.paleteId} size={100} />
           </div>
         </div>
-
-        {/* Clientes e Informações Adicionais */}
-        {(mapa.nomeClientes.length > 0 || mapa.infoAdicionaisI) && (
-          <div className="mt-2 space-y-1 border-t pt-2 text-[11px]">
-            {mapa.nomeClientes.length > 0 && (
-              <div>
-                <span className="font-semibold text-muted-foreground">
-                  CLIENTES:
-                </span>
-                <span className="ml-2 text-[9px]">
-                  {mapa.nomeClientes.join(" | ")}
-                </span>
-              </div>
-            )}
-            {mapa.infoAdicionaisI && (
-              <div>
-                <span className="font-semibold text-muted-foreground">
-                  INFO:
-                </span>
-                <span className="ml-2">{mapa.infoAdicionaisI}</span>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Resumo Quantitativo */}
         <div className="mt-3 flex flex-wrap justify-center border-t pt-3 text-center text-sm font-semibold">
@@ -116,10 +107,10 @@ export const Header = ({ mapa }: HeaderProps) => {
             ]
 
             return items.map((item, index) => (
-            <span key={index}>
-              {index > 0 && <span className="mx-2 text-muted-foreground">|</span>}
-              {item}
-            </span>
+              <span key={index}>
+                {index > 0 && <span className="mx-2 text-muted-foreground">|</span>}
+                {item}
+              </span>
             ))
           })()}
         </div>

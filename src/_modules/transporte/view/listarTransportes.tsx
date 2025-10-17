@@ -249,9 +249,6 @@ const TVHeader = ({ currentTime, transportesCount }: { currentTime: Date, transp
         <div className="text-2xl font-bold text-gray-800 font-mono">
           {currentTime.toLocaleTimeString('pt-BR')}
         </div>
-        <div className="text-sm font-semibold text-blue-600">
-          {transportesCount} ativos
-        </div>
       </div>
     </div>
   )
